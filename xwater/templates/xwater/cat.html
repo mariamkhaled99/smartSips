@@ -1,0 +1,38 @@
+{% comment %} {%extends './base.html'%} 
+{% load static %}
+
+{% block container %}
+
+<div  class="m-5" >
+  <div class="container"  >
+    <h3 align="center" >This is all products </h3>
+    <div class="row m-5" align="center">
+      {% for cat in allcategories %}
+
+      <div class="card m-3" style="width: 18rem"> 
+        
+        <a href="{% url 'xwater:productinfo' p.id %}">
+        <img
+          src="{{p.get_image_url}}"
+          class="card-img-top"
+          alt="productcover"
+        /></a>
+        <div class="card-body">
+          <h5 class="card-title">{{p.title}}</h5>
+          <p class="card-text">{{p.description}}</p>
+          <a href="#" class="text-center">
+            <button class="btn btn-primary btn-sm subscribe">Add to Cart</button>
+        </a>
+        <a href="#" class="text-center">
+          <button class="btn btn-danger btn-sm subscribe">Add to favourite</button>
+      </a>
+          <a href="{% url 'xwater:productinfo' p.id %}" class="btn btn-success">product details</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %} 
+  
+    {% endcomment %}

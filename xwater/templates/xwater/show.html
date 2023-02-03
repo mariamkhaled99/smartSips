@@ -1,0 +1,41 @@
+{%extends './base.html'%} 
+{% load static %}
+
+{% block container %}
+ 
+    <div class="m-5"align="center">
+      <div class="container w-100">
+        <h3>this is category {{product.category}}</h3>
+        
+          
+
+          <div class="card" style="width: 22rem">
+            <img
+          src="{{product.get_image_url}}"
+          class="card-img-top"
+          alt="bookcover"
+        />
+            <div class="card-body">
+              <h5 class="card-title">title :{{product.title}}</h5>
+              <p class="card-text">description :{{product.description}}</p>
+              <p class="card-text"> price :{{ product.price }}</p>
+              <p class="card-text"> published :{{ product.published }}</p>
+              <a href="#" class="text-center">
+                <button class="btn btn-primary btn-sm subscribe">Add to Cart</button>
+            </a>
+            <a href="#" class="text-center">
+              <button class="btn btn-danger btn-sm subscribe">Add to favourite</button>
+          </a>
+              
+            
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div> 
+
+
+{% endblock %}
+
+ 

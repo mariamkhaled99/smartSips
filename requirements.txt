@@ -168,7 +168,6 @@ python-dateutil==2.8.2
 python-gettext==4.1
 python3-openid==3.2.0
 pytz==2023.2
-pywin32==306
 PyYAML==6.0
 Record==4.0
 repoze.xmliter==0.6.1

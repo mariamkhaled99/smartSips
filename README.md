@@ -10,3 +10,35 @@
 ```shell
 pip install virtualenv
 ```
+</li>
+<li>go to smartSips folder
+
+```shell
+cd smartSips
+```
+</li>
+<li>Create virtual environment for windows
+
+```shell
+python -m venv venv
+```
+</li>
+<li>Clone repo on your machine
+
+```shell
+git clone https://github.com/mariamkhaled99/smartSips.git
+```
+</li>
+
+<li>open your virtual enviroment
+  
+```shell
+venv/Scripts/activate
+```
+</li>
+<li>Install requirements
+
+```shell
+pip install -r requirements.txt
+```
+</li>

@@ -1,0 +1,1 @@
+https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?redirect_uri=https%3A%2F%2F127.0.0.1%3A8000%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&prompt=consent&response_type=code&client_id=854757360712-2v8qnshlvfi2d2m02jl6d9jngn2idi9b.apps.googleusercontent.com&scope=email&access_type=offline&service=lso&o2v=2&flowName=GeneralOAuthFlow

@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    font-family: 'Exo', sans-serif;
+}
+html{
+    width: 100%;
+    height: 100%;
+}
+
+.background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    /* #2d2d2d */
+    background:  #ffffff;  
+    background: -webkit-linear-gradient(to left,#ffffff , #c6ba9b); 
+    width: 100%;
+    height:100vh;
+    
+}
+
+
+
+.context {
+    width: 100%;
+    position: absolute;
+    
+    top:20vh;
+    
+}
+
+.context h1{
+    text-align: center;
+    color: #1a1a19;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+
+
+.letter{
+    color:#c9c0ad31;
+    font-family:'Exo', sans-serif;
+    stroke-width: 3;
+    
+    
+    
+}
+
+
+
+
+@keyframes fall{
+    0% {
+       top: -70px
+   }
+    100% {
+       top:100%
+   }
+}
+
+@keyframes turn{
+    100% {
+       transform: rotatez(360deg) rotatey(360deg);
+   }
+}
+
+@keyframes turn-alt{
+    100% {
+       transform: rotatez(-360deg) rotatey(-360deg);
+   }
+}
+
+
+
+/* logo */
+
+.animate-charcter
+{
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+
+    #231557 0%,
+    #44107a 19%,
+    #ff1361 30%,
+    #fff800 60%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+      font-size: 140px;
+}
+
+/* form */
+.log{
+    
+      color: #1a1a19;
+     margin-top: 150px;
+     margin-left: 300px;
+     margin-right:300px;
+      
+
+}
+
+#staticEmail,.form-control{
+    background-color: #e4e1e1 !important;
+}
+
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #1a1a19 !important;
+    color: #f6f3ec;
+    border-color:#1a1a19;
+    margin: 20px;
+    padding-left:-10px;
+    padding-right:-10px;
+    
+    
+    
+    
+
+}

@@ -20,7 +20,7 @@ defusedxml==0.7.1
 diazo==1.5.0
 dj-rest-auth==3.0.0
 Django==4.1.7
-django-cors-headers=3.14.0
+django-cors-headers==3.14.0
 django-allauth==0.52.0
 django-environ==0.10.0
 django-rest-auth==0.9.5

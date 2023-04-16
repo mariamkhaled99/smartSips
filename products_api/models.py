@@ -18,8 +18,8 @@ class Category(models.Model):
 
 class Product(models.Model):
    
-    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,default=1)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE,default=1)
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE)
     title=models.CharField(max_length=250)
     description=models.TextField(null=True)
     published=models.DateTimeField(default=timezone.now)

@@ -5,15 +5,16 @@ from dj_rest_auth.registration.views import SocialLoginView
 from django.urls import reverse
 from django.shortcuts import redirect
 import urllib.parse
-# 
+# UpdateUserProfileSerializer
 from .models import CustomUser,AdminProfile,UserProfile 
-from .serializers import CustomRegisterSerializer,UpdateUserProfileSerializer,UserProfileSerializer,AdminProfileSerializer,SurveySerializer,SetNewPasswordSerializer,UpdateAdminProfileSerializer
+from .serializers import LoginSerializers,CustomRegisterSerializer,UserProfileSerializer,AdminProfileSerializer,SurveySerializer,SetNewPasswordSerializer,UpdateAdminProfileSerializer
 from rest_framework.response import Response
 from rest_framework import viewsets, status, generics, permissions
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated,BasePermission
+import json
 
 # Create your views here.
 
@@ -49,8 +50,8 @@ def google_callback_logout(request):
     return redirect(f'http://127.0.0.1:8000/login/')
 
 # class update admin custom permissions
-class AdminProfileUpdate(BasePermission):
-    message="editing admin profile isrestricted to admin only"
+# class AdminProfileUpdate(BasePermission):
+#     message="editing admin profile isrestricted to admin only"
 
 
 # for custom get list of sign up
@@ -58,7 +59,7 @@ class AdminProfileUpdate(BasePermission):
 class CustomUserViewSet(generics.ListAPIView):
     queryset=CustomUser.objects.all()
     serializer_class=CustomRegisterSerializer
-    # 
+  
 
 
 # for fill survey
@@ -148,11 +149,49 @@ class AdminProfileUpdate(generics.UpdateAPIView):
 class AdminProfileList(generics.ListCreateAPIView):
     queryset=AdminProfile.objects.all()
     serializer_class=AdminProfileSerializer
+    permission_classes = [AllowAny]
 
 
 
 class UpdateUserProfileList(generics.ListAPIView):
     queryset=UserProfile.objects.all()
     serializer_class=UserProfileSerializer
+    permission_classes = [AllowAny]
     
-   
+class CustomLoginViewSet(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class=LoginSerializers
+    
+    
+    # def get_serializer_class(self):
+    #     if self.request.user.is_superuser:
+            
+            
+    #         return AdminProfileSerializer
+    #     return UserProfileSerializer
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        email = request.data.get('email', '')
+        if CustomUser.objects.filter(email=email).exists():
+                
+                user = CustomUser.objects.get(email=email)
+                id = user.id
+                is_superuser=user.is_superuser
+
+                return Response({"message": "user login successfully",
+            
+  "user": {
+    "is_superuser": is_superuser,
+    "pk":  id,
+    "email":  email}})
+
+        else:
+            return Response({"message": "failed", "details": serializer.errors})
+        
+
+
+            
+          
+    

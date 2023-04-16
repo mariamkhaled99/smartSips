@@ -7,6 +7,8 @@ from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer
 from django.utils import timezone
+from rest_framework.response import Response
+from rest_framework import serializers
 
 
 # ---------------------------------sign up -------------------------------------------------------------------------------
@@ -59,15 +61,22 @@ class CustomRegisterSerializer(RegisterSerializer):
 
 
 class LoginSerializers(LoginSerializer):
-    
+    # is_superuser = serializers.BooleanField(default=False)
     username = None
+    class  Meta:
+        model = CustomUser
+        fields = ['username','id','email','is_superuser' ]
+       
+    
 
     def authenticate(self, **options):
         return authenticate(self.context["request"], **options)
 
     def validate(self, data):
+        id = data.get('id')
         email = data.get('email')
         password = data.get('password')
+        is_superuser=data.get('is_superuser')
 
         if email and password:
             user = authenticate(request=self.context.get('request'),
@@ -81,7 +90,9 @@ class LoginSerializers(LoginSerializer):
 
         data['user'] = user
         return data
+    
 
+            
 
 
 

@@ -14,12 +14,7 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
         other_fields.setdefault('is_active', True)
-        # other_fields.setdefault('address', '45 Potress ST')
-        # other_fields.setdefault('country', ' Egypt')
-        # other_fields.setdefault('city', ' Tanta')
-        # other_fields.setdefault('company', ' SmartSips')
-        # other_fields.setdefault('phone_number', '01101111111')
-        # other_fields.setdefault('profile_photo', 'upload_to/default.png')
+       
 
         if other_fields.get('is_staff') is not True:
             raise ValueError(
@@ -70,12 +65,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_normal = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
     is_farmer = models.BooleanField(default=False)
-    # address=models.CharField(max_length=150,default='45 Potress ST')
-    # country=models.CharField(max_length=150,default=' Egypt')
-    # city=models.CharField(max_length=150,default=' Tanta')
-    # company=models.CharField(max_length=150,default=' SmartSips')
-    # phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
-    # profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
+   
     
     # user_permissions = models.ManyToManyField(
     #     Permission,

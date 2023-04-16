@@ -35,6 +35,63 @@ class ProductUpdate(generics.UpdateAPIView):
 
         else:
             return Response({"message": "failed", "details": serializer.errors})
+          
+class ProductSortDevices(generics.ListAPIView):
+    
+    serializer_class=ProducttSerializer
+    permission_classes = [AllowAny]
+    
+    
+    def get_queryset(self):
+        
+        
+        devices = Category.objects.get(name='devices')
+
+        # Here you can do the following thing:
+        current_user = self.request.user
+
+        # And use it as you wish in the filtering below:
+
+        return Product.objects.filter(category=devices).order_by('title')
+    
+    
+    
+class ProductSortAccessories(generics.ListAPIView):
+    
+    serializer_class=ProducttSerializer
+    permission_classes = [AllowAny]
+    
+    
+    def get_queryset(self):
+        
+        
+        Accessories = Category.objects.get(name='Accessories')
+
+        # Here you can do the following thing:
+        current_user = self.request.user
+
+        # And use it as you wish in the filtering below:
+
+        return Product.objects.filter(category=Accessories).order_by('title')
+
+
+class ProductSortGadgets(generics.ListAPIView):
+    
+    serializer_class=ProducttSerializer
+    permission_classes = [AllowAny]
+    
+    
+    def get_queryset(self):
+        
+        
+        Gadgets = Category.objects.get(name='Gadgets')
+
+        # Here you can do the following thing:
+        current_user = self.request.user
+
+        # And use it as you wish in the filtering below:
+
+        return Product.objects.filter(category=Gadgets).order_by('title')
         
         
 # class ResearchSerializer(serializers.ModelSerializer):

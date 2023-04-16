@@ -194,4 +194,30 @@ class CustomLoginViewSet(generics.GenericAPIView):
 
             
           
+class LoginList(generics.ListAPIView):
     
+    serializer_class=LoginSerializers
+    permission_classes = [AllowAny]
+#     def list(self):
+#         for user in self.queryset:
+#             email=user.email
+#             username=user.username
+#             id=user.id
+#             is_superuser=user.is_superuser
+#             return Response({"message": "user login is:",
+            
+#   "user": {
+#     "is_superuser": is_superuser,
+#     "pk":  id,
+#     "email":  email,'username':username}})
+            
+#     def get_queryset(self):
+#         username = self.kwargs['username']
+#         professor = User.objects.get(username=username)
+
+#         # Here you can do the following thing:
+#         current_user = self.request.user
+
+#         # And use it as you wish in the filtering below:
+
+#         return UserProfile.objects.filter(professor=professor).order_by('username')

@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.exceptions import ValidationError
 import re
+from django.contrib.auth.models import Permission
 
 
 class CustomAccountManager(BaseUserManager):
@@ -67,13 +68,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_farmer = models.BooleanField(default=False)
    
     
-    # user_permissions = models.ManyToManyField(
-    #     Permission,
-    #     verbose_name=_('user permissions'),
-    #     blank=True,
-    #     help_text=_('Specific permissions for this user.'),
-    #     related_name="+",
-    # )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name=_('user permissions'),
+        blank=True,
+        help_text=_('Specific permissions for this user.'),
+        related_name="+",
+    )
    
 
     objects = CustomAccountManager()

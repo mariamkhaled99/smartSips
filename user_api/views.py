@@ -43,11 +43,11 @@ class GoogleLogin(SocialLoginView): # if you want to use Authorization Code Gran
 
 def google_callback(request):
     params = urllib.parse.urlencode(request.GET)
-    return redirect(f'http://127.0.0.1:8000/home/{params}')
+    return redirect(f'https://smartsips-production.up.railway.app/home/{params}')
 
 def google_callback_logout(request):
     request.session.flush()
-    return redirect(f'http://127.0.0.1:8000/login/')
+    return redirect(f'https://smartsips-production.up.railway.app/login/')
 
 # class update admin custom permissions
 # class AdminProfileUpdate(BasePermission):
@@ -221,3 +221,5 @@ class LoginList(generics.ListAPIView):
 #         # And use it as you wish in the filtering below:
 
 #         return UserProfile.objects.filter(professor=professor).order_by('username')
+
+

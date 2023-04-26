@@ -3,7 +3,7 @@ from django.urls import path
 
 app_name='order_api'
 
-# urlpatterns = [
+urlpatterns = [
  
 #     #show all product
 #     path('',ProductList.as_view(),name='listcreate_product'),
@@ -15,5 +15,5 @@ app_name='order_api'
     
     
     
-#     ]
+    ]
    

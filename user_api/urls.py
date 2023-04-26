@@ -1,5 +1,7 @@
 from django.urls import path,include
-from .views import LoginList,SurveyList,CustomLoginViewSet,SetNewPasswordUpdate,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
+from .views import LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
+
+# ,SetNewPasswordUpdate
 
 app_name='user_api'
 

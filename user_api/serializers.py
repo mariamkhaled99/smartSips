@@ -104,10 +104,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
     email=serializers.EmailField()
     username= serializers.CharField(
         max_length=80)
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
    
     class Meta:
        model = UserProfile
-       fields = ['phone_number','profile_photo','address','username','password','email','country' ]
+       fields = ['id','phone_number','profile_photo','address','username','password','email','country' ]
     
     # def create(self, val_data):
     #     return get_user_model().objects.create_user(**val_data)

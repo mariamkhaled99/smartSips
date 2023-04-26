@@ -152,11 +152,23 @@ class AdminProfileList(generics.ListCreateAPIView):
     permission_classes = [AllowAny]
 
 
-
-class UpdateUserProfileList(generics.RetrieveDestroyAPIView):
+class UpdateUserProfileList(generics.ListAPIView):
     queryset=UserProfile.objects.all()
     serializer_class=UserProfileSerializer
     permission_classes = [AllowAny]
+    
+
+class CreateUserProfileList(generics.CreateAPIView):
+    queryset=UserProfile.objects.all()
+    serializer_class=UserProfileSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'pk'
+    
+class DeleteUserProfileList(generics.DestroyAPIView):
+    queryset=UserProfile.objects.all()
+    serializer_class=UserProfileSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'pk'
     
 class CustomLoginViewSet(generics.GenericAPIView):
     queryset = CustomUser.objects.all()

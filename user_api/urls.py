@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
+from .views import CreateUserProfileList,DeleteUserProfileList,LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
 
 # ,SetNewPasswordUpdate
 
@@ -27,6 +27,8 @@ urlpatterns = [
     path('userprofile/list',UpdateUserProfileList.as_view(),name='userprofilelist'),
     path('customlogin/',CustomLoginViewSet.as_view(),name='customlogin'),
     path('loginlist/',LoginList.as_view(),name='loginlist'),
+    path('userprofile/delete/<int:pk>',DeleteUserProfileList.as_view(),name='userprofiledelete'),
+    path('userprofile/create/<int:pk>',CreateUserProfileList.as_view(),name='userprofilecreate'),
     # path('<int:pk>/adminprofile/updatetest',AdminProfileList.as_view(),name='adminprofileupdate'),
     
     

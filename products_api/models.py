@@ -6,10 +6,14 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from user_api.models import CustomUser
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime ,timedelta
 
 
 def upload_to(instance,filename):
     return 'products/{filename}'.format(filename=filename)
+
+
+
 
 class Category(models.Model):
     name=models.CharField(max_length=100)
@@ -18,7 +22,7 @@ class Category(models.Model):
 
 class Product(models.Model):
    
-    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    # user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     title=models.CharField(max_length=250)
     description=models.TextField(null=True)
@@ -28,6 +32,7 @@ class Product(models.Model):
     stock=models.IntegerField(default=30)
     # need to fix image
     image=models.ImageField(upload_to='upload_to',default='products/default.jpg')
+    
 
     
     class Meta:
@@ -55,3 +60,7 @@ class Product(models.Model):
     def get_image_url(self):
         return f"/media/{self.image}"
              
+class Wishlist(models.Model):
+    product=models.ManyToManyField(Product,blank=True,related_name="user")
+    user_wishlist=models.ManyToManyField(CustomUser,blank=True,related_name="user")
+    

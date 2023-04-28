@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Product,Category
+from .models import Product,Category,Wishlist
+from user_api.models import CustomUser
 
 
 class ProducttSerializer(serializers.ModelSerializer):
@@ -13,4 +14,15 @@ class CategorySerializer(serializers.ModelSerializer):
         model=Category
         fields=('id','name')
         
+        
+class WishlisttSerializer(serializers.ModelSerializer):
+    # id=
+    # title
+    # price
+    # stock
+    # image
+    # category
+    class Meta:
+        model=Wishlist
+        fields=('id','product','user_wishlist')
         

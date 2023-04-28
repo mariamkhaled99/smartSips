@@ -207,7 +207,7 @@ class CustomLoginViewSet(generics.GenericAPIView):
             
           
 class LoginList(generics.ListAPIView):
-    
+    queryset=CustomUser.objects.all()
     serializer_class=LoginSerializers
     permission_classes = [AllowAny]
     

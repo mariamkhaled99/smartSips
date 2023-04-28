@@ -1,9 +1,13 @@
 
 from rest_framework import generics
-from .models import Product,Category
-from .serializers import ProducttSerializer,CategorySerializer
+from .models import Product,Category,Wishlist
+from .serializers import ProducttSerializer,CategorySerializer,WishlisttSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated,BasePermission
+from django.shortcuts import get_object_or_404
+
+
+from user_api.models import CustomUser
 
 
 # we can list and create items by this view 
@@ -14,10 +18,14 @@ class ProductList(generics.ListCreateAPIView):
 
 
 # we can retrive and delete specific item by this view 
-class ProductDetail(generics.RetrieveDestroyAPIView):
+class ProductDetail(generics.DestroyAPIView):
     queryset=Product.objects.all()
     serializer_class=ProducttSerializer
     permission_classes = [AllowAny]
+    lookup_field = 'pk'
+    
+    
+
 #used to update some fields inside product table  
 class ProductUpdate(generics.UpdateAPIView):
     queryset = Product.objects.all()
@@ -112,3 +120,47 @@ class CategoryList(generics.ListCreateAPIView):
     queryset=Category.objects.all()
     serializer_class=CategorySerializer
     permission_classes = [AllowAny]
+    
+    
+    
+class Add_wishlist(generics.CreateAPIView):
+    queryset=Wishlist.objects.all()
+    serializer_class=WishlisttSerializer
+    permission_classes = [IsAuthenticated]
+    
+    # def validate(self, attrs):
+    #     user_id = CustomUser.objects.get(id=id)
+    #     product= get_object_or_404(Product,id=user_id)
+    #     if product.user_wishlist.filter(id=user_id).exists():
+    #         return Response("product already exist")
+    #     else :
+    #         id = attrs.get('id')
+    #         title = attrs.get('title')
+    #         price = attrs.get('price')
+    #         stock= attrs.get('stock')
+    #         image = attrs.get('image')
+    #         category = attrs.get('category')
+    #         user_wishlist = CustomUser.objects.get(id=id)
+    #         user_wishlist.save()
+    #         return user_wishlist
+                
+               
+               
+        
+        
+            
+       
+       
+    
+
+class Delete_wishlist(generics.DestroyAPIView):
+    queryset=Wishlist.objects.all()
+    serializer_class=WishlisttSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'pk'
+
+class WishlistList(generics.ListAPIView):
+    queryset=Wishlist.objects.all()
+    serializer_class=WishlisttSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_field = 'user_wishlist'

@@ -6,13 +6,14 @@ from user_api.models import CustomUser,AdminProfile,Survey,UserProfile
 # admin.site.register(admin)
 admin.site.register(UserProfile)
 admin.site.register(AdminProfile)
-admin.site.register(CustomUser)
+# admin.site.register(CustomUser)
 admin.site.register(Survey)
-# class CustomUserAdminSite(admin.ModelAdmin):
-#     model=CustomUser
-#     fields=[ 'subscription_date','password']
-#     list_display = ('subscription_date','password')
+class CustomUserAdminSite(admin.ModelAdmin):
+    model=CustomUser
+    fields=[ 'id','username','email','created_at']
+    list_display = ('id','username','email','created_at')
     
-# admin.site.register(CustomUser,CustomUserAdminSite)
+admin.site.register(CustomUser,CustomUserAdminSite)
 # ,'auth_source','auth_id','social_account',
 # 'social_account',
+

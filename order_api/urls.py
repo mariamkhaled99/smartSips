@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import OrderListApiView,OrderDeleteApiView,OrderDetailsListApiView,OrderInvoicesApiView
+from .views import OrderListApiView,OrderDeleteApiView,OrderDetailsListApiView,OrderHistorysApiView
 app_name='order_api'
 
 urlpatterns = [
@@ -10,7 +10,7 @@ urlpatterns = [
     path('<int:pk>/delete',OrderDeleteApiView.as_view(),name='list_order'),
     #update individual product 
     path('<int:pk>/list',OrderDetailsListApiView.as_view(),name='list_order'),
-    path('order/history',OrderInvoicesApiView.as_view(),name='history_all_order'),
+    path('order/history',OrderHistorysApiView.as_view(),name='history_all_order'),
     
     
     

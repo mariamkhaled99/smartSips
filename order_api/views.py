@@ -1,5 +1,6 @@
 
-from.serializers import OrderSerializer,OrderDetailsSerializer,OrderInvoicesSerializer
+from.serializers import OrderSerializer,OrderDetailsSerializer,OrderHistorysSerializer
+# ,OrderInvoicesSerializer
 from rest_framework import generics
 from .models import Order
 
@@ -10,13 +11,13 @@ from django.shortcuts import get_object_or_404
 class OrderListApiView(generics.ListAPIView):
     queryset=Order.objects.all()
     serializer_class=OrderSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
 
 class OrderDeleteApiView(generics.DestroyAPIView):
     queryset=Order.objects.all()
     serializer_class=OrderSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
 
 
@@ -24,15 +25,15 @@ class OrderDeleteApiView(generics.DestroyAPIView):
 class OrderDetailsListApiView(generics.ListAPIView):
     queryset=Order.objects.all()
     serializer_class=OrderDetailsSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
     
     
     
 
-class OrderInvoicesApiView(generics.ListAPIView):
+class OrderHistorysApiView(generics.ListAPIView):
     queryset=Order.objects.all()
-    serializer_class=OrderInvoicesSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class=OrderHistorysSerializer
+    # permission_classes = [IsAuthenticated]
     
 

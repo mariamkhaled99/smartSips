@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from user_api.models import CustomUser
+from user_api.models import CustomUser,AdminProfile
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime ,timedelta
 
@@ -23,6 +23,7 @@ class Category(models.Model):
 class Product(models.Model):
    
     # user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
+    admincompany=models.ForeignKey(AdminProfile,on_delete=models.CASCADE)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     title=models.CharField(max_length=250)
     description=models.TextField(null=True)

@@ -21,7 +21,7 @@ urlpatterns = [
     path('ml_api/', include('ml_api.urls')),
     path('iot_api/', include('iot_api.urls')),
     path('products_api/', include('products_api.urls')),
-    # path('order_api/', include('order_api.urls')),
+    path('order_api/', include('order_api.urls')),
     path('accounts/', include('allauth.urls')),
     # """ render templates at user_api routes"""
     path('login/',login,name="login"),

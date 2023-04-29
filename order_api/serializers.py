@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Order
-from user_api.models import CustomUser,UserProfile
+from user_api.models import CustomUser,UserProfile,AdminProfile
+from products_api.models import Product
 
                 
 class OrderSerializer(serializers.ModelSerializer):
@@ -56,6 +57,28 @@ class OrderInvoicesSerializer(serializers.ModelSerializer):
     class Meta:
         model=Order
         fields=('id','amount','total_price','delivery_date','order_date')
+        
+        
+class OrderInvoicesSerializer(serializers.ModelSerializer):
+    company=serializers.SerializerMethodField()
+    category=serializers.SerializerMethodField()
+    image=serializers.SerializerMethodField()
+    
+    
+    class Meta:
+        model=Order
+        fields=('id','company','category','image','delivery_date')
+        def company(self):
+            company=AdminProfile.company
+            return company
+        def category(self):
+            category=Product.category
+            return category
+        def category(self):
+            image=Product.image
+            return image
+        
+    
         
     
         

@@ -14,7 +14,8 @@ class Order(models.Model):
     order_date=models.DateTimeField(default=timezone.now)
     delivery_date=models.DateTimeField(default=date_delivery,blank=True)
     
-    
+    def __str__(self):
+        return self.user.username
     
     
     

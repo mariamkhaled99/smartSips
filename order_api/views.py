@@ -1,5 +1,5 @@
 
-from.serializers import OrderSerializer,OrderDetailsSerializer,OrderHistorysSerializer
+from.serializers import OrderSerializer,OrderDetailsSerializer,OrderHistorysSerializer,OrderCreatesSerializer
 # ,OrderInvoicesSerializer
 from rest_framework import generics
 from .models import Order
@@ -34,6 +34,12 @@ class OrderDetailsListApiView(generics.ListAPIView):
 class OrderHistorysApiView(generics.ListAPIView):
     queryset=Order.objects.all()
     serializer_class=OrderHistorysSerializer
+    # permission_classes = [IsAuthenticated]
+    
+    
+class OrderCreatesApiView(generics.CreateAPIView):
+    queryset=Order.objects.all()
+    serializer_class=OrderCreatesSerializer
     # permission_classes = [IsAuthenticated]
     
 

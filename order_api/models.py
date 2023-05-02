@@ -16,27 +16,7 @@ class Order(models.Model):
     
     def __str__(self):
         return self.user.username
-    
-    # @property
-    # def category(self):
-    #     for item in self.items:
-            
-    #         category=item.category
-        
-    #     return category
-            
-       
-    # @property
-    # def company(self):
-    #     for item in self.items:
-    #            image=item.image
-       
-    #     return imag
-    
-    
-    
-    
-    
+      
     @property
     def amount(self):
         amount=self.items.count()
@@ -74,9 +54,7 @@ class Order(models.Model):
     def company(self):
         for item in self.items.all():
             
-            company=item.admincompany.company
-                
-                # company=company.company
+            company=item.admincompany
             return company
         
         

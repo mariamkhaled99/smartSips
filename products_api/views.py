@@ -11,7 +11,12 @@ from user_api.models import CustomUser
 
 
 # we can list and create items by this view 
-class ProductList(generics.ListCreateAPIView):
+
+class ProductCreate(generics.CreateAPIView):
+    queryset=Product.objects.all()
+    serializer_class=ProducttSerializer
+    permission_classes = [IsAdminUser]
+class ProductList(generics.ListAPIView):
     queryset=Product.objects.all()
     serializer_class=ProducttSerializer
     permission_classes = [AllowAny]
@@ -119,7 +124,7 @@ class ProductSortGadgets(generics.ListAPIView):
 class CategoryList(generics.ListCreateAPIView):
     queryset=Category.objects.all()
     serializer_class=CategorySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser]
     
     
     

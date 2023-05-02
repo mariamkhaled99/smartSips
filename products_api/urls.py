@@ -1,12 +1,13 @@
 from django.urls import path
-from .views import WishlistList,Delete_wishlist,Add_wishlist,ProductList,ProductDetail,ProductUpdate,CategoryList,ProductSortDevices,ProductSortAccessories,ProductSortGadgets
+from .views import ProductCreate,WishlistList,Delete_wishlist,Add_wishlist,ProductList,ProductDetail,ProductUpdate,CategoryList,ProductSortDevices,ProductSortAccessories,ProductSortGadgets
 
 app_name='products_api'
 
 urlpatterns = [
  
     #show all product
-    path('all',ProductList.as_view(),name='listcreate_product'),
+    path('product/all',ProductList.as_view(),name='list_product'),
+    path('product/add',ProductCreate.as_view(),name='product_add'),
     #show individual product or delete it 
     path('<int:pk>/detail',ProductDetail.as_view(),name='detaildelete_product'),
     #update individual product 

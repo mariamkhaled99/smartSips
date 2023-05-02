@@ -23,7 +23,7 @@ class Category(models.Model):
 class Product(models.Model):
    
     # user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
-    admincompany=models.ForeignKey(AdminProfile,on_delete=models.CASCADE)
+    admincompany=models.CharField(max_length=250)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     title=models.CharField(max_length=250)
     description=models.TextField(null=True)

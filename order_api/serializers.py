@@ -45,6 +45,11 @@ class OrderHistorysSerializer(serializers.ModelSerializer):
     class Meta:
         model=Order
         fields=('id','company','category','image','delivery_date')
+        
+class OrderCreatesSerializer(serializers.ModelSerializer):
+     class Meta:
+        model=Order
+        fields=('id','items','user')
       
     
         

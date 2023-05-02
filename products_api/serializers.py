@@ -6,7 +6,7 @@ from user_api.models import CustomUser
 class ProducttSerializer(serializers.ModelSerializer):
     class Meta:
         model=Product
-        fields=('id','title','description','published','price','sales','stock','image', 'category')
+        fields=('id','title','description','published','price','sales','stock','image', 'category','admincompany')
         
         
 class CategorySerializer(serializers.ModelSerializer):

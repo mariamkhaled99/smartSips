@@ -124,14 +124,14 @@ class ProductSortGadgets(generics.ListAPIView):
 class CategoryList(generics.ListCreateAPIView):
     queryset=Category.objects.all()
     serializer_class=CategorySerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
     
     
     
 class Add_wishlist(generics.CreateAPIView):
     queryset=Wishlist.objects.all()
     serializer_class=WishlisttSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     
     # def validate(self, attrs):
     #     user_id = CustomUser.objects.get(id=id)

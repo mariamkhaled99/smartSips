@@ -15,7 +15,7 @@ from user_api.models import CustomUser
 class ProductCreate(generics.CreateAPIView):
     queryset=Product.objects.all()
     serializer_class=ProducttSerializer
-    permission_classes = [IsAdminUser]
+    # permission_classes = [IsAdminUser]
 class ProductList(generics.ListAPIView):
     queryset=Product.objects.all()
     serializer_class=ProducttSerializer

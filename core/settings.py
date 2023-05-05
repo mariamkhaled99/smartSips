@@ -196,8 +196,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'profile',
             'email',
         ], "APP": {
-        "client_id": "854757360712-2v8qnshlvfi2d2m02jl6d9jngn2idi9b.apps.googleusercontent.com",
-        "secret": "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",
+        "client_id": "413583069200-o26le90g9p1828u7ha1hsqefua6rg4vi.apps.googleusercontent.com",
+        "secret": "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",
         "key": ""
     },
         'AUTH_PARAMS': {

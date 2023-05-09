@@ -216,3 +216,19 @@ class LoginList(generics.ListAPIView):
 
 
 
+class UserProfileOne(generics.ListAPIView):
+    # queryset = CustomUser.objects.filter(id=id)
+    serializer_class = UserProfileSerializer
+    lookup_field = 'pk'
+    def get_queryset(self):
+            
+        # current_user = self.request.user.id
+        # print(current_user)
+        id =self.kwargs.get(self.lookup_field)
+
+        # Here you can do the following thing:
+        
+
+        # And use it as you wish in the filtering below:
+
+        return CustomUser.objects.filter(id=id)

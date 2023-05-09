@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import CreateUserProfileList,DeleteUserProfileList,LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
+from .views import UserProfileOne,CreateUserProfileList,DeleteUserProfileList,LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
 
 # ,SetNewPasswordUpdate
 
@@ -13,7 +13,7 @@ urlpatterns = [
     path('auth/registration/', include('dj_rest_auth.registration.urls')),
     # for most of end point included in auth 
     path('auth/', include('dj_rest_auth.urls')),
-    
+    path('<int:pk>/userprofile/get',UserProfileOne.as_view(),name='userprofile_get'),
   
     #  edit admin profile
     path('<int:pk>/userprofile/update',UserProfileUpdate.as_view(),name='userprofile'),

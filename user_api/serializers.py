@@ -1,4 +1,4 @@
-from .models import CustomUser,AdminProfile,UserProfile,Survey
+from .models import CustomUser,Survey
 from rest_framework import  serializers
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth import authenticate
@@ -10,7 +10,7 @@ from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework import serializers
 
-
+# AdminProfile,UserProfile,
 # ---------------------------------sign up -------------------------------------------------------------------------------
 # class UserSerializer(serializers.ModelSerializer):  
 #     class Meta:
@@ -107,7 +107,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     id=serializers.PrimaryKeyRelatedField(read_only=True)
    
     class Meta:
-       model = UserProfile
+       model = CustomUser
        fields = ['id','phone_number','profile_photo','address','username','password','email','country' ]
     
     # def create(self, val_data):
@@ -129,7 +129,7 @@ class AdminProfileSerializer(serializers.ModelSerializer):
     username= serializers.CharField(
         max_length=80, write_only=True)
     class Meta:
-       model = AdminProfile
+       model = CustomUser
        fields = ['phone_number','profile_photo','address','country','city','company','username','password','email' ]
     
     

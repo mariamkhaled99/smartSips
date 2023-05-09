@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from .models import Order
-from user_api.models import CustomUser,UserProfile,AdminProfile
+from user_api.models import CustomUser
 from products_api.models import Product
-
+# ,UserProfile,AdminProfile
                 
 class OrderSerializer(serializers.ModelSerializer):
     amount = serializers.IntegerField()

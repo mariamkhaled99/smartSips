@@ -1,11 +1,11 @@
 from django.contrib import admin
-from user_api.models import CustomUser,AdminProfile,Survey,UserProfile,AdminProfile
+from user_api.models import CustomUser,Survey
 
-
+# ,UserProfile,AdminProfile
 # Register your models here.
 # admin.site.register(admin)
-admin.site.register(UserProfile)
-admin.site.register(AdminProfile)
+# admin.site.register(UserProfile)
+# admin.site.register(AdminProfile)
 # admin.site.register(CustomUser)
 admin.site.register(Survey)
 class CustomUserAdminSite(admin.ModelAdmin):

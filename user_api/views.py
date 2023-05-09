@@ -5,8 +5,8 @@ from dj_rest_auth.registration.views import SocialLoginView
 from django.urls import reverse
 from django.shortcuts import redirect
 import urllib.parse
-# UpdateUserProfileSerializer
-from .models import CustomUser,AdminProfile,UserProfile 
+# UpdateUserProfileSerializer,,AdminProfile,UserProfile 
+from .models import CustomUser
 from .serializers import LoginSerializers,CustomRegisterSerializer,UserProfileSerializer,AdminProfileSerializer,SurveySerializer,SetNewPasswordSerializer,UpdateAdminProfileSerializer
 from rest_framework.response import Response
 from rest_framework import viewsets, status, generics, permissions
@@ -147,25 +147,25 @@ class AdminProfileUpdate(generics.UpdateAPIView):
   
 
 class AdminProfileList(generics.ListCreateAPIView):
-    queryset=AdminProfile.objects.all()
+    queryset=admins = CustomUser.objects.filter(is_superuser=True)
     serializer_class=AdminProfileSerializer
     permission_classes = [AllowAny]
 
 
 class UpdateUserProfileList(generics.ListAPIView):
-    queryset=UserProfile.objects.all()
+    queryset=admins = CustomUser.objects.filter(is_superuser=False)
     serializer_class=UserProfileSerializer
     permission_classes = [AllowAny]
     
 
 class CreateUserProfileList(generics.CreateAPIView):
-    queryset=UserProfile.objects.all()
+    queryset=CustomUser.objects.all()
     serializer_class=UserProfileSerializer
     permission_classes = [AllowAny]
     lookup_field = 'pk'
     
 class DeleteUserProfileList(generics.DestroyAPIView):
-    queryset=UserProfile.objects.all()
+    queryset=CustomUser.objects.all()
     serializer_class=UserProfileSerializer
     permission_classes = [AllowAny]
     lookup_field = 'pk'

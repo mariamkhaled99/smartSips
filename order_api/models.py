@@ -1,10 +1,10 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
-from user_api.models import CustomUser,AdminProfile
+from user_api.models import CustomUser
 from products_api.models import Product
 from django.utils import timezone
 from datetime import datetime ,timedelta
-
+# ,AdminProfile
 # Create your models here.
 
 date_delivery=datetime.now()+timedelta(days=3) 

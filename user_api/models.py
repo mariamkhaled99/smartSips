@@ -15,6 +15,15 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
         other_fields.setdefault('is_active', True)
+        other_fields.setdefault('address', ' Elgalaa ST')
+        other_fields.setdefault('country', 'Egypt')
+        other_fields.setdefault('phone_number', "+00000000000")
+        other_fields.setdefault('profile_photo', 'upload_to/default.png')
+        other_fields.setdefault('city', 'Tanta')
+        other_fields.setdefault('company', ' SmartSips')
+       
+   
+
        
 
         if other_fields.get('is_staff') is not True:
@@ -38,6 +47,10 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('is_farmer', False)
         other_fields.setdefault('is_suffer_heart', False)
         other_fields.setdefault('is_suffer_kidney', False)
+        other_fields.setdefault('address', ' Elgalaa ST')
+        other_fields.setdefault('country', 'Egypt')
+        other_fields.setdefault('phone_number', "+00000000000")
+        other_fields.setdefault('profile_photo', 'upload_to/default.png')
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -66,6 +79,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_normal = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
     is_farmer = models.BooleanField(default=False)
+    address=models.CharField(max_length=150,default=' Elgalaa ST')
+    country=models.CharField(max_length=150,default=' Egypt')
+    phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
+    profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
+    city=models.CharField(max_length=150,default=' Tanta')
+    company=models.CharField(max_length=150,default=' SmartSips')
    
     
     user_permissions = models.ManyToManyField(
@@ -100,67 +119,68 @@ class Survey(models.Model):
     
     def __str__(self):
         return self.user.username
-    
-    
-class AdminProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    address=models.CharField(max_length=150,default='45 Potress ST')
-    country=models.CharField(max_length=150,default=' Egypt')
-    city=models.CharField(max_length=150,default=' Tanta')
-    company=models.CharField(max_length=150,default=' SmartSips')
-    phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
-    profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
-    def __str__(self):
-        return self.user.username
-    
-    @property
-    def email(self):
-            email=self.user.email
-            return email
-    @property
-    def username(self):
-            username=self.user.username
-            return username
-        
-    @property
-    def password(self):
-            password=self.user.password
-            return password
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    address=models.CharField(max_length=150,default=' Elgalaa ST')
-    country=models.CharField(max_length=150,default=' Egypt')
-    phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
-    profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
-    def __str__(self):
-        return self.user.username
+# admins = CustomUser.objects.filter(is_superuser=True)
     
-    @property
-    def email(self):
-        # if  self.social_account and self.social_account.provider:
-            email=self.user.email
-            return email
+# class AdminProfile(models.Model):
+#     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+#     address=models.CharField(max_length=150,default='45 Potress ST')
+#     country=models.CharField(max_length=150,default=' Egypt')
+#     city=models.CharField(max_length=150,default=' Tanta')
+#     company=models.CharField(max_length=150,default=' SmartSips')
+#     phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
+#     profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
+#     def __str__(self):
+#         return self.user.username
     
-    @email.setter
-    def email(self,new_email):
-        # if  self.social_account and self.social_account.provider:
-            self._email = new_email
+#     @property
+#     def email(self):
+#             email=self.user.email
+#             return email
+#     @property
+#     def username(self):
+#             username=self.user.username
+#             return username
+        
+#     @property
+#     def password(self):
+#             password=self.user.password
+#             return password
+
+# class UserProfile(models.Model):
+#     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+#     address=models.CharField(max_length=150,default=' Elgalaa ST')
+#     country=models.CharField(max_length=150,default=' Egypt')
+#     phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
+#     profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
+#     def __str__(self):
+#         return self.user.username
+    
+#     @property
+#     def email(self):
+#         # if  self.social_account and self.social_account.provider:
+#             email=self.user.email
+#             return email
+    
+#     @email.setter
+#     def email(self,new_email):
+#         # if  self.social_account and self.social_account.provider:
+#             self._email = new_email
             
     
     
-    @property
-    def username(self):
-            username=self.user.username
-            return username
-    @username.setter
-    def username(self, new_username):
-        self._username = new_username
+#     @property
+#     def username(self):
+#             username=self.user.username
+#             return username
+#     @username.setter
+#     def username(self, new_username):
+#         self._username = new_username
         
-    @property
-    def password(self):
-            password=self.user.password
-            return password
+#     @property
+#     def password(self):
+#             password=self.user.password
+#             return password
     
     
         

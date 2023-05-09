@@ -18,7 +18,7 @@ urlpatterns = [
     path('productsortby/gadgets',ProductSortGadgets.as_view(),name='productsortby_gadgets'),
     path('wishlist/add',Add_wishlist.as_view(),name='wishlist_add'),
     path('wishlist/delete/<int:pk>',Delete_wishlist.as_view(),name='wishlist_delete'),
-    path('wishlist/list/',WishlistList.as_view(),name='wishlist_list'),
+    path('wishlist/list/<int:user_wishlist>',WishlistList.as_view(),name='wishlist_list'),
     
     
     

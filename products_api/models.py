@@ -4,10 +4,10 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from user_api.models import CustomUser,AdminProfile
+from user_api.models import CustomUser
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime ,timedelta
-
+# ,AdminProfile
 
 def upload_to(instance,filename):
     return 'products/{filename}'.format(filename=filename)

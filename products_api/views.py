@@ -167,5 +167,5 @@ class Delete_wishlist(generics.DestroyAPIView):
 class WishlistList(generics.ListAPIView):
     queryset=Wishlist.objects.all()
     serializer_class=WishlisttSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     lookup_field = 'user_wishlist'

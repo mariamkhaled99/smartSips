@@ -9,11 +9,13 @@ from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
+from user_api.views import ImageUploadViewSet
 
-# router=DefaultRouter()
+router=DefaultRouter()
 # router.register('user_register',UserViewSet,basename='user_register')
-
+router.register(r'imageupload', ImageUploadViewSet)
 urlpatterns = [
+    path('imageupload/<int:pk>/', include(router.urls)),
     path('admin/', admin.site.urls),
     # """ apps routes"""
     path('user_api/', include('user_api.urls')),
@@ -48,7 +50,11 @@ urlpatterns = [
 # urlpatterns +=router.urls
 urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
     
-    
+
+
+
+
+
 
 
  

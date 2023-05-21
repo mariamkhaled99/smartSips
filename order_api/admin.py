@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Order
+from .models import Order,Cart
+# 
 
 # class OrderAdminSite(admin.ModelAdmin):
 #     model=Order
@@ -7,3 +8,4 @@ from .models import Order
 #     list_display = ('id','order_date')
     
 admin.site.register(Order)
+admin.site.register(Cart)

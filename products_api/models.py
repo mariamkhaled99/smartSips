@@ -33,6 +33,7 @@ class Product(models.Model):
     stock=models.IntegerField(default=30)
     # need to fix image
     image=models.ImageField(upload_to='upload_to',default='products/default.jpg')
+
     
 
     
@@ -62,6 +63,6 @@ class Product(models.Model):
         return f"/media/{self.image}"
              
 class Wishlist(models.Model):
-    product=models.ManyToManyField(Product,blank=True,related_name="user")
-    user_wishlist=models.ManyToManyField(CustomUser,blank=True,related_name="user")
+    product=models.ManyToManyField(Product,blank=True,related_name="user_product")
+    user_wishlist=models.ForeignKey(CustomUser,blank=True,related_name="user_wish",on_delete=models.CASCADE)
     

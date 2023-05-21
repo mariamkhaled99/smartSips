@@ -1,12 +1,12 @@
 from django.urls import path,include
-from .views import UserProfileOne,CreateUserProfileList,DeleteUserProfileList,LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
+from .views import UserProfileOne,DeleteUserProfileList,LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
 
-# ,SetNewPasswordUpdate
+# ,SetNewPasswordUpdate,CreateUserProfileList
 
 app_name='user_api'
 
 urlpatterns = [
- 
+    
     # #show all product
     path('signup/',CustomUserViewSet.as_view(),name='signup'),
     # for register 
@@ -28,7 +28,7 @@ urlpatterns = [
     path('customlogin/',CustomLoginViewSet.as_view(),name='customlogin'),
     path('loginlist/',LoginList.as_view(),name='loginlist'),
     path('userprofile/delete/<int:pk>',DeleteUserProfileList.as_view(),name='userprofiledelete'),
-    path('userprofile/create/<int:pk>',CreateUserProfileList.as_view(),name='userprofilecreate'),
+    # path('userprofile/create/<int:pk>',CreateUserProfileList.as_view(),name='userprofilecreate'),
     # path('<int:pk>/adminprofile/updatetest',AdminProfileList.as_view(),name='adminprofileupdate'),
     
     

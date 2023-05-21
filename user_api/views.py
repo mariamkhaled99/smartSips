@@ -15,6 +15,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated,BasePermission
 import json
+from dj_rest_auth.registration.serializers import (
+    SocialAccountSerializer, SocialConnectSerializer, SocialLoginSerializer
+)
 
 # Create your views here.
 
@@ -43,16 +46,39 @@ class GoogleLogin(SocialLoginView): # if you want to use Authorization Code Gran
 
 def google_callback(request):
     params = urllib.parse.urlencode(request.GET)
-    return redirect(f'https://smartsips-production.up.railway.app/home/{params}')
+    return redirect(f'http://localhost:8000/google/home/{params}')
+    # return redirect(f'https://smartsips-production.up.railway.app/home/{params}')
 
 def google_callback_logout(request):
     request.session.flush()
-    return redirect(f'https://smartsips-production.up.railway.app/login/')
+    return redirect(f'http://localhost:8000/google/login/')
+    # return redirect(f'https://smartsips-production.up.railway.app/login/')
 
 # class update admin custom permissions
 # class AdminProfileUpdate(BasePermission):
 #     message="editing admin profile isrestricted to admin only"
 
+
+
+from .serializers import ImageUploadSerializer
+
+class ImageUploadViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = ImageUploadSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'pk'
+    def get_queryset(self):
+            
+        # current_user = self.request.user.id
+        # print(current_user)
+        id =self.kwargs.get(self.lookup_field)
+
+        # Here you can do the following thing:
+        
+
+        # And use it as you wish in the filtering below:
+
+        return CustomUser.objects.filter(id=id)
 
 # for custom get list of sign up
 
@@ -146,7 +172,7 @@ class AdminProfileUpdate(generics.UpdateAPIView):
             return Response({"message": "failed", "details": serializer.errors})
   
 
-class AdminProfileList(generics.ListCreateAPIView):
+class AdminProfileList(generics.ListAPIView):
     queryset=admins = CustomUser.objects.filter(is_superuser=True)
     serializer_class=AdminProfileSerializer
     permission_classes = [AllowAny]
@@ -158,11 +184,11 @@ class UpdateUserProfileList(generics.ListAPIView):
     permission_classes = [AllowAny]
     
 
-class CreateUserProfileList(generics.CreateAPIView):
-    queryset=CustomUser.objects.all()
-    serializer_class=UserProfileSerializer
-    permission_classes = [AllowAny]
-    lookup_field = 'pk'
+# class CreateUserProfileList(generics.CreateAPIView):
+#     queryset=CustomUser.objects.all()
+#     serializer_class=UserProfileSerializer
+#     permission_classes = [AllowAny]
+#     lookup_field = 'pk'
     
 class DeleteUserProfileList(generics.DestroyAPIView):
     queryset=CustomUser.objects.all()

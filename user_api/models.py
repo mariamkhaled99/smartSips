@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.exceptions import ValidationError
 import re
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.models import Permission
 
 
@@ -35,13 +36,15 @@ class CustomAccountManager(BaseUserManager):
 
         return self.create_user(email, username, password, **other_fields)
 
-    def create_user(self, email, username, password, **other_fields):
-
+    def create_user(self, email, username, password,social_account, **other_fields):
+            
+             
         if not email:
             raise ValueError(_('You must provide an email address'))
 
         email = self.normalize_email(email)
         user = self.model(email=email, username=username,password=None,**other_fields)
+        
         other_fields.setdefault('is_normal', False)
         other_fields.setdefault('is_patient', False)
         other_fields.setdefault('is_farmer', False)
@@ -50,12 +53,19 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('address', ' Elgalaa ST')
         other_fields.setdefault('country', 'Egypt')
         other_fields.setdefault('phone_number', "+00000000000")
-        other_fields.setdefault('profile_photo', 'upload_to/default.png')
+        other_fields.setdefault('profile_photo', 'upload_to/default.jpg')
         user.set_password(password)
         user.save(using=self._db)
+        # Populate the social account data
+        social_account = SocialAccount.objects.filter(user=user).first()
+        if social_account:
+            # Update the user instance with data from the social account
+            # user.first_name = social_account.extra_data.get('first_name', '')
+            # user.last_name = social_account.extra_data.get('last_name', '')
+            user.email = social_account.extra_data.get('email', '')
+            user.username = social_account.extra_data.get('username', '')
+            user.save()
         return user
-
-
 
 def upload_to(instance,filename):
     return 'users_api/{filename}'.format(filename=filename)
@@ -68,10 +78,10 @@ def validate_phone_number(value):
         raise ValidationError("Phone number must be 11 numbers")
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-
+    social_account= models.ForeignKey(SocialAccount, on_delete=models.CASCADE,null=True, blank=True, related_name='usersocial')
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=150,null=True)
-    password= models.CharField(max_length=20)
+    password= models.CharField(max_length=20,null=True)
     created_at = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -82,7 +92,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     address=models.CharField(max_length=150,default=' Elgalaa ST')
     country=models.CharField(max_length=150,default=' Egypt')
     phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
-    profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
+    profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.jpg')
     city=models.CharField(max_length=150,default=' Tanta')
     company=models.CharField(max_length=150,default=' SmartSips')
    
@@ -106,9 +116,45 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+    
+    
+    # def __str__(self):
+    #     from .helpers import socialaccount_user_display
 
+    #     return socialaccount_user_display(self)
+
+              
+  # def get_provider(self):
+    #     return providers.registry.by_id(self.social_account.provider)
+
+    
 
  
+       
+
+
+# class CustomSocialUser(SocialAccount):
+#     social_user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,null=True, blank=True, related_name='usersocial')
+    
+    
+#     def __str__(self):
+#         return self.user.username
+    
+    
+#     def get_profile_url(self):
+        
+#         if self.social_account and self.social_account.get_provider_account():
+#             return self.social_account.get_provider_account().get_profile_url()
+        
+
+#     def get_avatar_url(self):
+#         if self.social_account and self.social_account.get_provider_account():
+#             return self.social_account.get_provider_account().get_avatar_url()
+        
+        
+#     def get_provider_account(self):
+#         if self.social_account and self.social_account.get_provider_account():
+#             return self.social_account.get_provider().wrap_account(self.social_account)  
 
 
 
@@ -121,40 +167,9 @@ class Survey(models.Model):
         return self.user.username
 
 # admins = CustomUser.objects.filter(is_superuser=True)
-    
-# class AdminProfile(models.Model):
-#     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-#     address=models.CharField(max_length=150,default='45 Potress ST')
-#     country=models.CharField(max_length=150,default=' Egypt')
-#     city=models.CharField(max_length=150,default=' Tanta')
-#     company=models.CharField(max_length=150,default=' SmartSips')
-#     phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
-#     profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
-#     def __str__(self):
-#         return self.user.username
-    
-#     @property
-#     def email(self):
-#             email=self.user.email
-#             return email
-#     @property
-#     def username(self):
-#             username=self.user.username
-#             return username
-        
-#     @property
-#     def password(self):
-#             password=self.user.password
-#             return password
 
-# class UserProfile(models.Model):
-#     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-#     address=models.CharField(max_length=150,default=' Elgalaa ST')
-#     country=models.CharField(max_length=150,default=' Egypt')
-#     phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
-#     profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.png')
-#     def __str__(self):
-#         return self.user.username
+
+
     
 #     @property
 #     def email(self):

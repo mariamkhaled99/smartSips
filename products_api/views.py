@@ -58,7 +58,7 @@ class ProductSortDevices(generics.ListAPIView):
     def get_queryset(self):
         
         
-        devices = Category.objects.get(name='devices')
+        devices = Category.objects.get(name='Devices')
 
         # Here you can do the following thing:
         current_user = self.request.user
@@ -133,6 +133,7 @@ class Add_wishlist(generics.CreateAPIView):
     serializer_class=WishlisttSerializer
     # permission_classes = [IsAuthenticated]
     
+    
     # def validate(self, attrs):
     #     user_id = CustomUser.objects.get(id=id)
     #     product= get_object_or_404(Product,id=user_id)
@@ -165,7 +166,19 @@ class Delete_wishlist(generics.DestroyAPIView):
     lookup_field = 'pk'
 
 class WishlistList(generics.ListAPIView):
-    queryset=Wishlist.objects.all()
+    # queryset=Wishlist.objects.all()
     serializer_class=WishlisttSerializer
     # permission_classes = [IsAuthenticated]
     lookup_field = 'user_wishlist'
+    def get_queryset(self):
+            
+        # current_user = self.request.user.id
+        # print(current_user)
+        id =self.kwargs.get(self.lookup_field)
+
+        # Here you can do the following thing:
+        
+
+        # And use it as you wish in the filtering below:
+
+        return Wishlist.objects.filter(user_wishlist=id)

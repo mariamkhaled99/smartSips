@@ -23,7 +23,8 @@
             <h1>Welcome to smartSips Translator</h1>
         </div>
         {% csrf_token %}
-        <form class="container" method="post" action="http://127.0.0.1:8000/accounts/google/login/" >
+        {% comment %} https://smartsips-production.up.railway.app/accounts/google/login/{% endcomment %}
+        <form class="container" method="post" action="http://localhost:8000/accounts/google/login/" >
         <div class="mb-3 log">
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
@@ -41,8 +42,8 @@
             <button class="btn btn-primary" type="submit">login</button>
           </div>
           <div class="mb-3 row">
-        
-            <a class="btn btn-danger"href="https://smartsips-production.up.railway.app/accounts/google/login/">Google</a> 
+        {% comment %} https://smartsips-production.up.railway.app/accounts/google/login/{% endcomment %}
+            <a class="btn btn-danger"href="http://localhost:8000/accounts/google/login/">Google</a> 
          </div>
         </div>
         

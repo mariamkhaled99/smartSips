@@ -94,7 +94,14 @@ class LoginSerializers(LoginSerializer):
 
             
 
-
+class ImageUploadSerializer(serializers.HyperlinkedModelSerializer):
+    
+    class Meta:
+        model = CustomUser
+        fields= (
+            'id',
+            'profile_photo'
+        )
 
     
     
@@ -108,7 +115,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
    
     class Meta:
        model = CustomUser
-       fields = ['id','phone_number','profile_photo','address','username','password','email','country' ]
+       fields = ['id','phone_number','address','username','password','email','country' ]
     
     # def create(self, val_data):
     #     return get_user_model().objects.create_user(**val_data)
@@ -130,7 +137,7 @@ class AdminProfileSerializer(serializers.ModelSerializer):
         max_length=80, write_only=True)
     class Meta:
        model = CustomUser
-       fields = ['phone_number','profile_photo','address','country','city','company','username','password','email' ]
+       fields = ['phone_number','address','country','city','company','username','password','email' ]
     
     
     def update(self,instance,val_data):

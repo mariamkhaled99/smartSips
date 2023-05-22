@@ -26,3 +26,12 @@ class WishlisttSerializer(serializers.ModelSerializer):
         model=Wishlist
         fields=('id','product','user_wishlist')
         
+        
+class ImageUploadSerializer(serializers.HyperlinkedModelSerializer):
+    
+    class Meta:
+        model = Product
+        fields= (
+            'id',
+            'image'
+        )

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated,BasePermission
 from django.shortcuts import get_object_or_404
 
-
+from rest_framework import viewsets
 from user_api.models import CustomUser
 
 
@@ -182,3 +182,26 @@ class WishlistList(generics.ListAPIView):
         # And use it as you wish in the filtering below:
 
         return Wishlist.objects.filter(user_wishlist=id)
+    
+    
+    
+
+from .serializers import ImageUploadSerializer
+
+class ImageUploadViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = ImageUploadSerializer
+    permission_classes = [AllowAny]
+    lookup_field = 'pk'
+    def get_queryset(self):
+            
+        # current_user = self.request.user.id
+        # print(current_user)
+        id =self.kwargs.get(self.lookup_field)
+
+        # Here you can do the following thing:
+        
+
+        # And use it as you wish in the filtering below:
+
+        return Category.objects.filter(id=id)

@@ -1,9 +1,13 @@
-from django.urls import path
-from .views import ProductCreate,WishlistList,Delete_wishlist,Add_wishlist,ProductList,ProductDetail,ProductUpdate,CategoryList,ProductSortDevices,ProductSortAccessories,ProductSortGadgets
-
+from django.urls import path,include
+from .views import ImageUploadViewSet, ProductCreate,WishlistList,Delete_wishlist,Add_wishlist,ProductList,ProductDetail,ProductUpdate,CategoryList,ProductSortDevices,ProductSortAccessories,ProductSortGadgets
+from rest_framework.routers import DefaultRouter
 app_name='products_api'
 
+router=DefaultRouter()
+# router.register('user_register',UserViewSet,basename='user_register')
+router.register(r'imageupload', ImageUploadViewSet)
 urlpatterns = [
+    path('imageupload/<int:pk>/', include(router.urls)),
  
     #show all product
     path('product/all',ProductList.as_view(),name='list_product'),

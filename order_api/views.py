@@ -1,5 +1,5 @@
 
-from.serializers import CartCreateSerializer,CarUpdatetSerializer,OrderSerializer,OrderDetailsSerializer,OrderHistorysSerializer,OrderCreatesSerializer,CartSerializer
+from.serializers import OrderHistorysCartSerializer,OrderListSerializer,CartCreateSerializer,CarUpdatetSerializer,OrderSerializer,OrderDetailsSerializer,OrderHistorysSerializer,OrderCreatesSerializer,CartSerializer
 # ,OrderInvoicesSerializer,CarUpdatetSerializer,
 
 from rest_framework import generics
@@ -20,18 +20,7 @@ class OrderListApiView(generics.ListAPIView):
     queryset=Order.objects.all()
     serializer_class=OrderSerializer
     lookup_field = 'cart'
-    # def get_queryset(self):
-            
-    #     # current_user = self.request.user.id
-    #     # print(current_user)
-    #     id =self.kwargs.get(self.lookup_field)
-
-    #     # Here you can do the following thing:
-        
-
-    #     # And use it as you wish in the filtering below:
-
-    #     return Order.objects.filter(cart=id)
+  
     
     
 
@@ -41,18 +30,7 @@ class OrderDeleteApiView(generics.DestroyAPIView):
     serializer_class=OrderSerializer
     # permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
-    # def get_queryset(self):
-            
-    #     # current_user = self.request.user.id
-    #     # print(current_user)
-    #     id =self.kwargs.get(self.lookup_field)
-
-    #     # Here you can do the following thing:
-        
-
-    #     # And use it as you wish in the filtering below:
-
-    #     return Order.objects.filter(cart=id)
+  
     
 class OrderUpdateApiView(generics.UpdateAPIView):
     """for updating  one item inside the cart (qnt)"""
@@ -60,18 +38,7 @@ class OrderUpdateApiView(generics.UpdateAPIView):
     serializer_class=OrderSerializer
     # permission_classes = [IsAuthenticated]
     lookup_field = 'pk'
-    # def get_queryset(self):
-            
-    #     # current_user = self.request.user.id
-    #     # print(current_user)
-    #     id =self.kwargs.get(self.lookup_field)
-
-    #     # Here you can do the following thing:
-        
-
-    #     # And use it as you wish in the filtering below:
-
-    #     return Order.objects.filter(cart=id)
+    
 
 
  
@@ -87,9 +54,22 @@ class OrderDetailsListApiView(generics.ListAPIView):
 
 class OrderHistorysApiView(generics.ListAPIView):
     # queryset=Order.objects.all()
-    serializer_class=OrderHistorysSerializer
-    lookup_field = 'cart'
+    serializer_class=OrderHistorysCartSerializer
+    lookup_field = 'user'
     # permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        id =self.kwargs.get(self.lookup_field)
+
+    # Here you can do the following thing:
+    
+
+    # And use it as you wish in the filtering below:
+
+        return Cart.objects.filter(user=id)
+        
+    # current_user = self.request.user.id
+    # print(current_user)
+    
     
     
     
@@ -143,7 +123,10 @@ class CartUpdateApiView(generics.UpdateAPIView):
             
     
         
-        
+class OrderListAPIView(generics.ListAPIView):
+    queryset = Cart.objects.all()
+    permission_classes = [AllowAny]
+    serializer_class =OrderListSerializer
         
         
         

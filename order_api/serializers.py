@@ -33,11 +33,24 @@ class OrderHistorysSerializer(serializers.ModelSerializer):
     company=serializers.CharField(read_only=True)
     category=serializers.PrimaryKeyRelatedField(read_only=True)
     image=serializers.ImageField(read_only=True)
-    
+    Expected_date=serializers.DateTimeField(read_only=True)
     
     class Meta:
         model=Order
-        fields=('id','company','category','image')
+        fields=('id','company','category','image','Expected_date')
+        
+ 
+class OrderHistorysCartSerializer(WritableNestedModelSerializer,
+                        serializers.ModelSerializer):
+    items = OrderHistorysSerializer( many=True)
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+  
+ 
+
+    
+    class Meta:
+        model = Cart
+        fields = ['id','user','items' ]
         
 class OrderCreatesSerializer(serializers.ModelSerializer):
     
@@ -149,3 +162,42 @@ class  CarUpdatetSerializer(WritableNestedModelSerializer,
     class Meta:
         model = Cart
         fields = ['id','items','user' ]
+        
+        
+        
+
+class OrderListSerializer(WritableNestedModelSerializer,
+                        serializers.ModelSerializer):
+    items = YourcartProduct( many=True,read_only=True)
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+    address=serializers.CharField(read_only=True)
+    username=serializers.CharField(read_only=True)
+    total_price=serializers.SerializerMethodField(method_name="total")
+    amount=serializers.SerializerMethodField(method_name="amount_of_products")
+    
+    
+ 
+
+    
+    class Meta:
+        model = Cart
+        fields = ['id','items' ,'order_date','address','username','amount','total_price']
+            
+    def amount_of_products(self,cartitems:Cart):
+        """for all items"""
+        amount=0
+        for i in cartitems.items.all():
+            amount=i.qnt+amount
+        return amount
+    def total(self,cartitems:Cart):
+        """for one item"""
+        total_price=0
+        for i in cartitems.items.all():
+            total_price=(i.product.price*i.qnt)+total_price
+        return total_price
+    def final_total_price(self,cartitems:Cart):
+        total_price=0
+        for i in cartitems.items.all():
+            total_price=(i.product.price*i.qnt)+total_price
+        finalprice=total_price+cartitems.shipping
+        return finalprice

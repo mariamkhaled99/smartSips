@@ -97,6 +97,13 @@ class Order(models.Model):
     #     for item in self.items.all():   
         company=self.product.admincompany
         return company
+    
+    @property
+    def Expected_date(self):
+        
+    #     for item in self.items.all():   
+        Expected_date=self.cart.delivery_date
+        return Expected_date
    
   
 

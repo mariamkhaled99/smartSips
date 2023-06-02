@@ -61,7 +61,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 
 
 class LoginSerializers(LoginSerializer):
-    # is_superuser = serializers.BooleanField(default=False)
+    is_superuser = serializers.BooleanField()
     username = None
     class  Meta:
         model = CustomUser

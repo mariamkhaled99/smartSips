@@ -120,6 +120,7 @@ class ProductSortGadgets(generics.ListAPIView):
 #         return ResearchTemplateSerializer(templates, many=True).data
 
 
+""" Category serializers"""
 
 class CategoryList(generics.ListCreateAPIView):
     queryset=Category.objects.all()
@@ -127,6 +128,9 @@ class CategoryList(generics.ListCreateAPIView):
     # permission_classes = [IsAdminUser]
     
     
+    
+    
+""" wishlist serializers"""   
     
 class Add_wishlist(generics.CreateAPIView):
     queryset=Wishlist.objects.all()
@@ -149,15 +153,6 @@ class Add_wishlist(generics.CreateAPIView):
     #         user_wishlist = CustomUser.objects.get(id=id)
     #         user_wishlist.save()
     #         return user_wishlist
-                
-               
-               
-        
-        
-            
-       
-       
-    
 
 class Delete_wishlist(generics.DestroyAPIView):
     queryset=Wishlist.objects.all()
@@ -166,18 +161,13 @@ class Delete_wishlist(generics.DestroyAPIView):
     lookup_field = 'pk'
 
 class WishlistList(generics.ListAPIView):
-    # queryset=Wishlist.objects.all()
+    queryset=Wishlist.objects.all()
     serializer_class=WishlisttSerializer
     # permission_classes = [IsAuthenticated]
     lookup_field = 'user_wishlist'
     def get_queryset(self):
-            
-        # current_user = self.request.user.id
-        # print(current_user)
-        id =self.kwargs.get(self.lookup_field)
-
-        # Here you can do the following thing:
         
+        id =self.kwargs.get(self.lookup_field)
 
         # And use it as you wish in the filtering below:
 
@@ -185,23 +175,18 @@ class WishlistList(generics.ListAPIView):
     
     
     
-
+""" Product serializers"""
 from .serializers import ImageUploadSerializer
 
 class ImageUploadViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Product.objects.all()
     serializer_class = ImageUploadSerializer
     permission_classes = [AllowAny]
     lookup_field = 'pk'
     def get_queryset(self):
-            
-        # current_user = self.request.user.id
-        # print(current_user)
-        id =self.kwargs.get(self.lookup_field)
-
-        # Here you can do the following thing:
         
+        id =self.kwargs.get(self.lookup_field)
 
         # And use it as you wish in the filtering below:
 
-        return Category.objects.filter(id=id)
+        return Product.objects.filter(id=id)

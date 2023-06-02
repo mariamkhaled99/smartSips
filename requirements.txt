@@ -259,3 +259,4 @@ zope.testing==5.0.1
 zope.traversing==5.0
 zope.viewlet==5.0
 Zope2==4.0
+drf-writable-nested==0.7.0

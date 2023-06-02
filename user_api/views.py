@@ -114,7 +114,7 @@ class SurveyList(generics.UpdateAPIView):
 
     
 # #used to update password  table  
-class SetNewPasswordUpdate(generics.UpdateAPIView):
+class ReSetNewPasswordUpdate(generics.UpdateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = SetNewPasswordSerializer
     lookup_field = 'pk'

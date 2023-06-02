@@ -3,17 +3,8 @@ from .models import Order,Cart
 from user_api.models import CustomUser
 from products_api.models import Product
 from products_api.serializers import ProducttSerializer
-# ,UserProfile,AdminProfile
-                # ,Cart
-class OrderSerializer(serializers.ModelSerializer):
-    # amount = serializers.IntegerField()
-    price = serializers.IntegerField(read_only=True)
-    id=serializers.PrimaryKeyRelatedField(read_only=True)
-    class Meta:
-        model=Order
-        fields=('id','price','item','qnt')
-        # read_only_fields = (,)
-        # ,'amount'
+from drf_writable_nested.serializers import WritableNestedModelSerializer
+
         
         
 
@@ -49,34 +40,112 @@ class OrderHistorysSerializer(serializers.ModelSerializer):
         fields=('id','company','category','image')
         
 class OrderCreatesSerializer(serializers.ModelSerializer):
-    # items=ProducttSerializer(many=True, read_only=True)
+    
     id=serializers.PrimaryKeyRelatedField(read_only=True)
     price = serializers.IntegerField(read_only=True)
     class Meta:
         model=Order
-        fields=('id','item','qnt','price')
+        fields=('id','product','qnt','price','cart')
       
-    # ,'amount'
-      
+class YourcartProduct(serializers.ModelSerializer):
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+    class Meta:
+        model=Product
+        fields=('id','category','title','price','image')
+       
+
+class OrderSerializer(serializers.ModelSerializer):
     
-class  CartSerializer(serializers.ModelSerializer):
-    items = OrderSerializer(many=True, read_only=True)
-    # items=ProducttSerializer(many=True, read_only=True)
+    # product=YourcartProduct(read_only=True)
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+    priceqnt=serializers.SerializerMethodField(method_name="price_qnt")
+    class Meta:
+        model=Order
+        fields=('id','product','qnt', 'priceqnt')
+    def price_qnt(self,orderitem:Order):
+        """for one item"""
+    
+        priceqnt=orderitem.product.price*orderitem.qnt
+        return priceqnt
+
+class OrderCartSerializer(serializers.ModelSerializer):
+    """ to use this seializer with cart to create nested writable"""
+    product=YourcartProduct()
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+    priceqnt=serializers.SerializerMethodField(method_name="price_qnt")
+    class Meta:
+        model=Order
+        fields=('id','product','qnt', 'priceqnt')
+    def price_qnt(self,orderitem:Order):
+        """for one item"""
+    
+        priceqnt=orderitem.product.price*orderitem.qnt
+        return priceqnt
+        
+        
+   
+
+
+class CartSerializer(WritableNestedModelSerializer,
+                        serializers.ModelSerializer):
+    items = OrderCartSerializer( many=True)
     id=serializers.PrimaryKeyRelatedField(read_only=True)
     address=serializers.CharField(read_only=True)
     username=serializers.CharField(read_only=True)
-    total_price=serializers.IntegerField(read_only=True)
-    amount=serializers.IntegerField(read_only=True)
+    total_price=serializers.SerializerMethodField(method_name="total")
+    amount=serializers.SerializerMethodField(method_name="amount_of_products")
+    shipping=serializers.IntegerField(read_only=True)
+    finalprice=serializers.SerializerMethodField(method_name="final_total_price")
+ 
+
     
     class Meta:
         model = Cart
-        fields = ['id', 'delivery_date','user', 'order_date','items','address','username','amount','total_price']
-
-
-        
-        
-        
-       
-
+        fields = ['id', 'delivery_date','user','items' ,'order_date','address','username','amount','total_price','shipping','finalprice']
+            
+    def amount_of_products(self,cartitems:Cart):
+        """for all items"""
+        amount=0
+        for i in cartitems.items.all():
+            amount=i.qnt+amount
+        return amount
+    def total(self,cartitems:Cart):
+        """for one item"""
+        total_price=0
+        for i in cartitems.items.all():
+            total_price=(i.product.price*i.qnt)+total_price
+        return total_price
+    def final_total_price(self,cartitems:Cart):
+        total_price=0
+        for i in cartitems.items.all():
+            total_price=(i.product.price*i.qnt)+total_price
+        finalprice=total_price+cartitems.shipping
+        return finalprice
+    
+    
+class CartCreateSerializer(WritableNestedModelSerializer,
+                        serializers.ModelSerializer):
+    items = OrderSerializer( many=True)
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+  
+ 
 
     
+    class Meta:
+        model = Cart
+        fields = ['id','user','items' ]
+            
+  
+    
+    
+class  CarUpdatetSerializer(WritableNestedModelSerializer,
+                        serializers.ModelSerializer):
+    
+    items = OrderSerializer(many=True)
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+   
+   
+    
+    class Meta:
+        model = Cart
+        fields = ['id','items','user' ]

@@ -7,7 +7,7 @@ router=DefaultRouter()
 # router.register('user_register',UserViewSet,basename='user_register')
 router.register(r'imageupload', ImageUploadViewSet)
 urlpatterns = [
-    path('imageupload/<int:pk>/', include(router.urls)),
+    path('', include(router.urls)),
  
     #show all product
     path('product/all',ProductList.as_view(),name='list_product'),

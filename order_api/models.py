@@ -104,6 +104,12 @@ class Order(models.Model):
     #     for item in self.items.all():   
         Expected_date=self.cart.delivery_date
         return Expected_date
+    
+    @property
+    def title(self):
+        title=self.product.title
+        return title
+        
    
   
 

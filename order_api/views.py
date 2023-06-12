@@ -123,7 +123,7 @@ class CartUpdateApiView(generics.UpdateAPIView):
             
     
         
-class OrderListAPIView(generics.ListAPIView):
+class OrderListAllAPIView(generics.ListAPIView):
     queryset = Cart.objects.all()
     permission_classes = [AllowAny]
     serializer_class =OrderListSerializer

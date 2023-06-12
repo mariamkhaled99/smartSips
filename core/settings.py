@@ -27,8 +27,8 @@ from datetime import timedelta
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=3),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
@@ -99,6 +99,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     'dj_rest_auth',
     'drf_spectacular',
+    "drf_spectacular_sidecar",
     "corsheaders",
 
   
@@ -166,8 +167,8 @@ REST_AUTH = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_SCHEMA_CLASS':'drf_spectacular.openapi.AutoSchema',
     # 'DEFAULT_PERMISSION_CLASSES': [
@@ -183,6 +184,10 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS={
     "TITLE":"SmartSips Project api ",
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    # OTHER SETTINGS
 }
 
 
@@ -250,8 +255,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -289,10 +294,11 @@ EMAIL_HOST_USER = "smartsips2023@gmail.com"
 EMAIL_HOST_PASSWORD = "vpvsejvtrnfhnzgy"
 # os.environ.get('EMAIL_HOST_PASSWORD')
 # for image files
+STATIC_URL = '/static/'
 STATICFILES_DIRS=[BASE_DIR/'static']
 MEDIA_ROOT=os.path.join(BASE_DIR,'static/images')
 MEDIA_URL='/images/'
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 

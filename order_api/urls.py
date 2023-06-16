@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import OrderListAllAPIView,OrderUpdateApiView,CartDeleteesApiView,CartListApiView,CartCreatesApiView,OrderListApiView,OrderDeleteApiView,OrderDetailsListApiView,OrderHistorysApiView,OrderCreatesApiView
-
+from .views import OrderInvoiceCreateAPIVIEW,PaymentApiView,LocationApiView,MonthModelApiView,YearModelCreatesApiView,OrderListAllAPIView,OrderUpdateApiView,CartDeleteesApiView,CartListApiView,CartCreatesApiView,OrderListApiView,OrderDeleteApiView,OrderDetailsListApiView,OrderHistorysApiView,OrderCreatesApiView
+# 
 app_name='order_api'
 
 urlpatterns = [
@@ -20,6 +20,12 @@ urlpatterns = [
     # path('cart/update/<int:pk>',CartUpdateApiView.as_view(),name='update-cart'),
     path('cart/delete/<int:pk>',CartDeleteesApiView.as_view(),name='delete-cart'),
     path('order/list/all',OrderListAllAPIView.as_view(),name='order-list'),
+    path('payment/add/year',YearModelCreatesApiView.as_view(),name='payment-add'),
+    path('payment/add/month',MonthModelApiView.as_view(),name='payment-month'),
+    path('payment/add/location',LocationApiView.as_view(),name='payment-location'),
+    path('payment/create', PaymentApiView.as_view(),name='payment'),
+    path('OrderInvoice/create', OrderInvoiceCreateAPIVIEW.as_view(),name='OrderInvoice'),
+    
     
     
     

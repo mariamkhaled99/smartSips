@@ -117,45 +117,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
     
-    
-    # def __str__(self):
-    #     from .helpers import socialaccount_user_display
-
-    #     return socialaccount_user_display(self)
-
-              
-  # def get_provider(self):
-    #     return providers.registry.by_id(self.social_account.provider)
-
-    
-
- 
-       
-
-
-# class CustomSocialUser(SocialAccount):
-#     social_user = models.OneToOneField(CustomUser, on_delete=models.CASCADE,null=True, blank=True, related_name='usersocial')
-    
-    
-#     def __str__(self):
-#         return self.user.username
-    
-    
-#     def get_profile_url(self):
-        
-#         if self.social_account and self.social_account.get_provider_account():
-#             return self.social_account.get_provider_account().get_profile_url()
-        
-
-#     def get_avatar_url(self):
-#         if self.social_account and self.social_account.get_provider_account():
-#             return self.social_account.get_provider_account().get_avatar_url()
-        
-        
-#     def get_provider_account(self):
-#         if self.social_account and self.social_account.get_provider_account():
-#             return self.social_account.get_provider().wrap_account(self.social_account)  
-
 
 
 class Survey(models.Model):
@@ -168,34 +129,6 @@ class Survey(models.Model):
 
 # admins = CustomUser.objects.filter(is_superuser=True)
 
-
-
-    
-#     @property
-#     def email(self):
-#         # if  self.social_account and self.social_account.provider:
-#             email=self.user.email
-#             return email
-    
-#     @email.setter
-#     def email(self,new_email):
-#         # if  self.social_account and self.social_account.provider:
-#             self._email = new_email
-            
-    
-    
-#     @property
-#     def username(self):
-#             username=self.user.username
-#             return username
-#     @username.setter
-#     def username(self, new_username):
-#         self._username = new_username
-        
-#     @property
-#     def password(self):
-#             password=self.user.password
-#             return password
     
     
         

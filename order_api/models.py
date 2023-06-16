@@ -4,8 +4,7 @@ from user_api.models import CustomUser
 from products_api.models import Product
 from django.utils import timezone
 from datetime import datetime ,timedelta
-# ,AdminProfile
-# Create your models here.
+
 
 date_delivery=datetime.now()+timedelta(days=3) 
        
@@ -13,7 +12,6 @@ date_delivery=datetime.now()+timedelta(days=3)
 class Cart(models.Model):
     order_date=models.DateTimeField(default=timezone.now)
     delivery_date=models.DateTimeField(default=date_delivery,blank=True)
-    # order_item=models.ManyToManyField(Order,blank=True,related_name="items")
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     shipping=models.IntegerField(default=10)
     def __str__(self):
@@ -39,29 +37,7 @@ class Cart(models.Model):
     def username(self, new_username):
         self._username = new_username
         
-    # @property
-    # def total_price(self):
-    #     """for one item"""
-    #     total_price=0
-    #     for i in self.cart.items.all():
-    #         total_price=(i.product.price*i.qnt)+total_price
-    #     return total_price
-        
-  
    
-    
-    # def amount_of_products(self):
-    #     """for all items"""
-    #     amount=0
-    #     for i in cartitems.items.all():
-    #         amount=i.qnt+amount
-    #     return amount
-    # def total(self):
-    #     """for one item"""
-    #     total_price=0
-    #     for i in cartitems.items.all():
-    #         total_price=(i.product.price*i.qnt)+total_price
-    #     return total_price
 
 class Order(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE, related_name='products')
@@ -116,15 +92,82 @@ class Order(models.Model):
     
 
     
-        
-       
+     
+class LocationModel(models.Model):
+    country = models.CharField(max_length=50, default="Egypt")
+
+    def __str__(self):
+        return self.country
     
-   
-        
+class MonthModel(models.Model):
+    month = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.month
     
-# class OrderInvoice(models.Model):
-#     order=models.ManyToManyField(Order,blank=True)
-#     shipping=models.IntegerField(default=10)
+class YearModel(models.Model):
+    year = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.year
+    
+class payment(models.Model):
+    fullname=models.CharField(max_length=250,null=False)
+    billingaddress=models.CharField(max_length=250,null=False)
+    city=models.CharField(max_length=50,null=False)
+    zipcode=models.CharField(max_length=6,null=False)
+    country= models.ForeignKey(
+        LocationModel,
+        on_delete=models.CASCADE,
+        null=False,
+        related_name="country_name",
+        default=1,
+    )
+    month= models.ForeignKey(
+        MonthModel,
+        on_delete=models.CASCADE,
+        related_name="month_name",
+        null=False,
+        default=1
+    )
+    year= models.ForeignKey(
+        YearModel,
+        on_delete=models.CASCADE,
+        related_name="year_name",
+        null=False,
+        default=1
+    )
+    
+    cardholdername=models.CharField(max_length=250)
+    
+    cvv=models.CharField(max_length=3)
+    cardnumber= models.CharField(
+        null=False,
+        max_length=16,
+       )
+    def __str__(self):
+        return self.cardholdername
+import uuid
+class OrderInvoice(models.Model):
+    cart=models.ForeignKey(Cart,blank=True,related_name='cart',on_delete=models.CASCADE)
+    shipping=models.IntegerField(default=10)
+    invoice_date=models.DateTimeField(default=timezone.now)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    @property
+    def billto(self):
+            billto=self.cart.user.username
+            return billto
+    @property
+    def user_id(self):
+            user_id=self.cart.user.id
+            return user_id
+        
+        
+
+    
+
+
+
     
 
 

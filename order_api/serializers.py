@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import Order,Cart
+from .models import Order,Cart,YearModel,MonthModel,LocationModel,payment,OrderInvoice
 from user_api.models import CustomUser
 from products_api.models import Product
 from products_api.serializers import ProducttSerializer
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
-        
+        # 
         
 
 
@@ -201,3 +201,41 @@ class OrderListSerializer(WritableNestedModelSerializer,
             total_price=(i.product.price*i.qnt)+total_price
         finalprice=total_price+cartitems.shipping
         return finalprice
+    
+class LocationModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocationModel
+        fields = ['id','country']
+        
+class MonthModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MonthModel
+        fields = ['id','month' ]
+        
+class YearModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = YearModel
+        fields = ['id','year' ]
+    
+class PaymentSerializer(serializers.ModelSerializer):
+    country = serializers.PrimaryKeyRelatedField(queryset=LocationModel.objects.all())
+    class Meta:
+        model = payment
+        fields = ['id','fullname' ,'billingaddress','city','zipcode','country','month','year','cardholdername','cardnumber','cvv']
+        
+
+        
+class OrderInvoiceCreateSerializer(WritableNestedModelSerializer,
+                        serializers.ModelSerializer):
+    
+    
+    shipping=serializers.IntegerField(read_only=True)
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
+    billto=serializers.CharField(read_only=True)
+    user_id=serializers.PrimaryKeyRelatedField(read_only=True)
+    invoice_date=serializers.DateTimeField(read_only=True)
+    class Meta:
+        model = OrderInvoice
+        fields = ['id','shipping' ,'invoice_date','cart','billto','user_id']
+            
+    

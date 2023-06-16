@@ -1,9 +1,9 @@
 
-from.serializers import OrderHistorysCartSerializer,OrderListSerializer,CartCreateSerializer,CarUpdatetSerializer,OrderSerializer,OrderDetailsSerializer,OrderHistorysSerializer,OrderCreatesSerializer,CartSerializer
+from.serializers import OrderInvoiceCreateSerializer,PaymentSerializer,YearModelSerializer,MonthModelSerializer,LocationModelSerializer,OrderHistorysCartSerializer,OrderListSerializer,CartCreateSerializer,CarUpdatetSerializer,OrderSerializer,OrderDetailsSerializer,OrderHistorysSerializer,OrderCreatesSerializer,CartSerializer
 # ,OrderInvoicesSerializer,CarUpdatetSerializer,
-
+# 
 from rest_framework import generics
-from .models import Order,Cart
+from .models import Order,Cart,LocationModel,MonthModel,YearModel,payment,OrderInvoice
 # 
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser,AllowAny,IsAuthenticated,BasePermission
@@ -131,4 +131,66 @@ class OrderListAllAPIView(generics.ListAPIView):
         
         
         
+        
+    
+class YearModelCreatesApiView(generics.CreateAPIView):
+    queryset=YearModel.objects.all()
+    serializer_class=YearModelSerializer
+
+
+    
+class MonthModelApiView(generics.CreateAPIView):
+    queryset=MonthModel.objects.all()
+    serializer_class=MonthModelSerializer
+    
+    
+    
+    
+class LocationApiView(generics.CreateAPIView):
+    queryset=LocationModel.objects.all()
+    serializer_class=LocationModelSerializer
+    
+class OrderInvoiceCreateAPIVIEW(generics.CreateAPIView):
+    queryset=OrderInvoice.objects.all()
+    serializer_class=OrderInvoiceCreateSerializer
+
+    
+class PaymentApiView(generics.CreateAPIView):
+    queryset=payment.objects.all()
+    serializer_class = PaymentSerializer
+
+    def create(self, request, *args, **kwargs):
+        # custom logic here
+        billingaddress = request.data.get('billingaddress')
+        city = request.data.get('city')
+        fullname = request.data.get('fullname')
+        zipcode = request.data.get('zipcode')
+        country_id = request.data.get('country')
+        month_id = request.data.get('month')
+        year_id=request.data.get('year')
+        cardholdername = request.data.get('cardholdername')
+        cvv = request.data.get('cvv')
+        cardnumber = request.data.get('cardnumber')
+
+        # create a new LocationModel instance
+        country = LocationModel.objects.get(pk=country_id)
+        month = MonthModel.objects.get(pk=month_id)
+        year = YearModel.objects.get(pk=year_id)
+
+        payment.objects.create(
+            cardnumber=cardnumber,
+            cvv=cvv,
+            billingaddress=billingaddress,
+            city=city,
+            fullname=fullname,
+            zipcode=zipcode,
+            country=country,
+            month=month,
+            year=year,
+            cardholdername=cardholdername
+        )
+        # OrderInvoice.objects.create()
+        # # Cart.objects.filter(user=id)
+        return Response({'is_paied': True}, status=200)
+   
         

@@ -285,14 +285,12 @@ REST_AUTH_SERIALIZERS = {
 
 
 ACCOUNT_USERNAME_REQUIRED = False 
-# sending email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "smartsips2023@gmail.com"
-# os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = "vpvsejvtrnfhnzgy"
+EMAIL_USE_TLS = True
+'
+# EMAIL_HOST_PASSWORD = "vpvsejvtrnfhnzgy"
 # os.environ.get('EMAIL_HOST_PASSWORD')
 # for image files
 STATIC_URL = '/static/'

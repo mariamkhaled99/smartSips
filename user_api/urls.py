@@ -1,6 +1,6 @@
 from django.urls import path,include
 from .views import CustomPasswordChangeView,UserProfileOne,DeleteUserProfileList,LoginList,SurveyList,CustomLoginViewSet,UserProfileUpdate,CustomUserViewSet,AdminProfileList,AdminProfileUpdate,UpdateUserProfileList
-from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
+# from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
 
     # ...
@@ -10,8 +10,8 @@ from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 app_name='user_api'
 
 urlpatterns = [
-    path('password/reset/', PasswordResetView.as_view(), name='password_reset'),
-    path('password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    # path('password/reset/', PasswordResetView.as_view(), name='password_reset'),
+    # path('password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     # #show all product
     path('signup/',CustomUserViewSet.as_view(),name='signup'),
     # for register 
@@ -33,7 +33,7 @@ urlpatterns = [
     path('customlogin/',CustomLoginViewSet.as_view(),name='customlogin'),
     path('loginlist/',LoginList.as_view(),name='loginlist'),
     path('userprofile/delete/<int:pk>',DeleteUserProfileList.as_view(),name='userprofiledelete'),
-    # path('password/change/<int:id>', CustomPasswordChangeView.as_view(), name='rest_password_change'),
+    path('password/change/<int:id>', CustomPasswordChangeView.as_view(), name='rest_password_change'),
     # path('reset/password/<int:pk>',ReSetNewPasswordUpdate.as_view(),name='reset-password'),
     # path('<int:pk>/adminprofile/updatetest',AdminProfileList.as_view(),name='adminprofileupdate'),
     

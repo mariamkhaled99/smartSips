@@ -10,6 +10,7 @@ from rest_framework.routers import DefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
 from user_api.views import ImageUploadViewSet
+from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
 router=DefaultRouter()
 # router.register('user_register',UserViewSet,basename='user_register')
@@ -44,7 +45,8 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('', SpectacularSwaggerView.as_view(url_name='schema')),
  
-    
+    path('password/reset/', PasswordResetView.as_view(), name='password_reset'),
+    path('password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # urlpatterns +=router.urls

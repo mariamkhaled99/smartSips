@@ -4,6 +4,7 @@ from user_api.models import CustomUser
 
 
 class ProducttSerializer(serializers.ModelSerializer):
+    id=serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model=Product
         fields=('id','title','description','published','price','sales','stock','image', 'category','admincompany')

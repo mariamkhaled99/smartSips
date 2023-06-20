@@ -5,9 +5,9 @@ from dj_rest_auth.registration.views import SocialLoginView
 from django.urls import reverse
 from django.shortcuts import redirect
 import urllib.parse
-# UpdateUserProfileSerializer,,AdminProfile,UserProfile 
+# UpdateUserProfileSerializer,,AdminProfile,UserProfile ,SetNewPasswordSerializer
 from .models import CustomUser
-from .serializers import LoginSerializers,CustomRegisterSerializer,UserProfileSerializer,AdminProfileSerializer,SurveySerializer,SetNewPasswordSerializer,UpdateAdminProfileSerializer
+from .serializers import CustomPasswordChangeSerializer,LoginSerializers,CustomRegisterSerializer,UserProfileSerializer,AdminProfileSerializer,SurveySerializer,UpdateAdminProfileSerializer
 from rest_framework.response import Response
 from rest_framework import viewsets, status, generics, permissions
 from rest_framework.views import APIView
@@ -109,28 +109,50 @@ class SurveyList(generics.UpdateAPIView):
 
 
 
+from dj_rest_auth.views import PasswordChangeView
+from rest_framework.generics import GenericAPIView
 
 
 
-    
+
 # #used to update password  table  
-class ReSetNewPasswordUpdate(generics.UpdateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = SetNewPasswordSerializer
-    lookup_field = 'pk'
+from django.shortcuts import get_object_or_404
+class CustomPasswordChangeView(PasswordChangeView,generics.UpdateAPIView):
+    queryset=CustomUser.objects.all()
+    serializer_class = CustomPasswordChangeSerializer
+    lookup_field = 'id'
     permission_classes = [AllowAny]
+  
+
 
     def update(self, request, *args, **kwargs):
+        
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        print(f'instance: {instance}')
+        print(f'lookup_field: {self.lookup_field}')
+        print(f'kwargs: {self.kwargs}')
+        user_id = self.kwargs.get('id')
+        # user_id = self.kwargs.get(self.lookup_field)
+        print(f'user_id from URL: {user_id}')
+        data = request.data.copy()
+        data['id'] = user_id
+        print(f'data dictionary: {data}')
+        data = {'id': data['id'], 'password': data['password'],'new_password1': data['new_password1'], 'new_password2': data['new_password2']}
+        serializer=CustomPasswordChangeSerializer(instance, data=data)
+        # serializer=self.get_serializer(instance, data=data, partial=True)
+        print(f'serializer: {serializer}')
 
         if serializer.is_valid():
+            
             serializer.save()
             return Response({"message": " password updated successfully"})
-
         else:
             return Response({"message": "failed", "details": serializer.errors})
+        
+    
 
+
+ 
     
 # #used to update some fields inside UserProfile table  
 class UserProfileUpdate(generics.UpdateAPIView):
@@ -162,6 +184,7 @@ class AdminProfileUpdate(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+        
         serializer = self.get_serializer(instance, data=request.data, partial=True)
 
         if serializer.is_valid():

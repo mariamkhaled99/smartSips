@@ -168,7 +168,8 @@ class  CarUpdatetSerializer(WritableNestedModelSerializer,
 
 class OrderListSerializer(WritableNestedModelSerializer,
                         serializers.ModelSerializer):
-    items = YourcartProduct( many=True,read_only=True)
+    items=OrderCartSerializer( many=True,read_only=True)
+    # items = YourcartProduct( many=True,read_only=True)
     id=serializers.PrimaryKeyRelatedField(read_only=True)
     address=serializers.CharField(read_only=True)
     username=serializers.CharField(read_only=True)
@@ -182,7 +183,8 @@ class OrderListSerializer(WritableNestedModelSerializer,
     class Meta:
         model = Cart
         fields = ['id','items' ,'order_date','address','username','amount','total_price']
-            
+    # def qnt(self,cartitems:Cart):
+        
     def amount_of_products(self,cartitems:Cart):
         """for all items"""
         amount=0

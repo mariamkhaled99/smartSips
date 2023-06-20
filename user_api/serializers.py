@@ -115,7 +115,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
    
     class Meta:
        model = CustomUser
-       fields = ['id','phone_number','address','username','password','email','country' ]
+       fields = ['id','phone_number','address','created_at','username','password','email','country' ]
     
     # def create(self, val_data):
     #     return get_user_model().objects.create_user(**val_data)
@@ -135,9 +135,10 @@ class AdminProfileSerializer(serializers.ModelSerializer):
     email=serializers.EmailField()
     username= serializers.CharField(
         max_length=80, write_only=True)
+    created_at=serializers.DateTimeField(read_only=True)
     class Meta:
        model = CustomUser
-       fields = ['phone_number','address','country','city','company','username','password','email' ]
+       fields = ['phone_number','address','country','created_at','city','company','username','password','email' ]
     
     
     def update(self,instance,val_data):
@@ -162,28 +163,85 @@ class SurveySerializer(serializers.ModelSerializer):
             return Survey.objects.create(**validated_data)
         
      
-        
-class SetNewPasswordSerializer(serializers.Serializer):
+from dj_rest_auth.serializers import PasswordChangeSerializer
+
+# class CustomPasswordChangeSerializer(PasswordChangeSerializer):
+#     # Override methods here
+#     pass
+
+
+from django.core.exceptions import ObjectDoesNotExist
+
+
+class CustomPasswordChangeSerializer(PasswordChangeSerializer):
+    new_password2= serializers.CharField(
+        min_length=8, max_length=68, write_only=True)
+    new_password1= serializers.CharField(
+        min_length=8, max_length=68, write_only=True)
     password = serializers.CharField(
         min_length=8, max_length=68, write_only=True)
+    id=serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
     class Meta:
-        fields = ['password']
+        model = CustomUser
+        fields = ['id','password']
+        
+  
+        
+    def validate(self, data):
+        print(data)
+        password = data.get('password')
+        user_id = data.get('id')
+        
 
+        if isinstance(user_id, CustomUser):
+            user_id = user_id.pk
+        
+        print(user_id)
+        
+        if user_id is None:
+            raise serializers.ValidationError('The user ID is missing')
+        try:
+            user = CustomUser.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError('The user does not exist')
+        user.set_password(password)
+        user.save()
+        return data
+    
+    
+    def save(self, **kwargs):
+        # get the validated data from the serializer
+        validated_data = dict(
+                list(self.validated_data.items()) +
+                list(kwargs.items())
+            )
+
+            # update the model instance with the validated data
+        instance = self.instance
+
+        for attr, value in validated_data.items():
+                setattr(instance, attr, value)
+
+        if instance is None:
+            pass
+        else:
+            instance.save()
+
+        return instance
+
+
+class ResetPasswordEmailRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(min_length=2)
+
+    class Meta:
+        model = CustomUser
+        fields = ["email"]
     
 
-    def validate(self, data):
         
-        
-        try:
-            password = data.get('password')
-            user = CustomUser.objects.get(id=data['id'])
-           
-            user.set_password(password)
-            user.save()
-            return super().validate(data)
-        except Exception as e:
-            raise AuthenticationFailed('The user is invalid', 401)
+
+ 
         
 class UpdateAdminProfileSerializer(serializers.ModelSerializer):
     adminProfile = AdminProfileSerializer()

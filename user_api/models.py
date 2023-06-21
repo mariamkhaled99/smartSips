@@ -10,8 +10,8 @@ from django.contrib.auth.models import Permission
 
 
 class CustomAccountManager(BaseUserManager):
-
-    def create_superuser(self, email, username, password, **other_fields):
+    
+    def create_superuser(self, email, username, password,social_account=None,**other_fields):
 
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
@@ -34,7 +34,7 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError(
                 'Superuser must be assigned to is_superuser=True.')
 
-        return self.create_user(email, username, password, **other_fields)
+        return self.create_user(email, username, password,social_account, **other_fields)
 
     def create_user(self, email, username, password,social_account, **other_fields):
             
@@ -43,7 +43,7 @@ class CustomAccountManager(BaseUserManager):
             raise ValueError(_('You must provide an email address'))
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username,password=None,**other_fields)
+        user = self.model(email=email, username=username,password=None,social_account=None,**other_fields)
         
         other_fields.setdefault('is_normal', False)
         other_fields.setdefault('is_patient', False)
@@ -52,7 +52,7 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('is_suffer_kidney', False)
         other_fields.setdefault('address', ' Elgalaa ST')
         other_fields.setdefault('country', 'Egypt')
-        other_fields.setdefault('phone_number', "+00000000000")
+        other_fields.setdefault('phone_number', "01000000000")
         other_fields.setdefault('profile_photo', 'upload_to/default.jpg')
         user.set_password(password)
         user.save(using=self._db)
@@ -91,7 +91,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_farmer = models.BooleanField(default=False)
     address=models.CharField(max_length=150,default=' Elgalaa ST')
     country=models.CharField(max_length=150,default=' Egypt')
-    phone_number=models.CharField(unique=True, null=True, blank=True, max_length=11, validators=[validate_phone_number])
+    phone_number=models.CharField(unique=False, null=True, blank=True, max_length=11, validators=[validate_phone_number])
     profile_photo=models.ImageField(upload_to='upload_to', default='upload_to/default.jpg')
     city=models.CharField(max_length=150,default=' Tanta')
     company=models.CharField(max_length=150,default=' SmartSips')

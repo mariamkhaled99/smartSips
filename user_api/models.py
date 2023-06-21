@@ -44,7 +44,7 @@ class CustomAccountManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email, username=username,password=None,social_account=None,**other_fields)
-        
+        other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_normal', False)
         other_fields.setdefault('is_patient', False)
         other_fields.setdefault('is_farmer', False)

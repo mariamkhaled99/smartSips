@@ -48,6 +48,7 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('is_normal', False)
         other_fields.setdefault('is_patient', False)
         other_fields.setdefault('is_farmer', False)
+        other_fields.setdefault('is_superuser', False)
         other_fields.setdefault('is_suffer_heart', False)
         other_fields.setdefault('is_suffer_kidney', False)
         other_fields.setdefault('address', ' Elgalaa ST')

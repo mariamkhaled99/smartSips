@@ -13,8 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY ='django-insecure-8!zahxpz3!276sqqcrg)9xpes-@td(^6w*5zu(seyltxfdtlls'
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY ='django-insecure-8!zahxpz3!276sqqcrg)9xpes-@td(^6w*5zu(seyltxfdtlls'
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -305,9 +305,9 @@ MEDIA_URL='/images/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
-
+# 'p5c2a3ce.ala.us-east-1.emqxsl.com'
 MQTT_SERVER = 'broker.emqx.io'
 MQTT_PORT = 1883
 MQTT_KEEPALIVE = 60
-MQTT_USER = 'mariam'
-MQTT_PASSWORD = 'mariameissa'
+MQTT_USER = 'test'
+MQTT_PASSWORD = 'test'

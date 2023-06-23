@@ -1,6 +1,6 @@
 import json
 from django.http import JsonResponse
-from mqtt_test.mqtt import client as mqtt_client
+from core.mqtt import client as mqtt_client
 import requests
 import serial
 import time
@@ -18,11 +18,19 @@ def iot_client():
         reader = csv.reader(f)
         rows = list(reader)
     random_row = random.choice(rows)
+<<<<<<< HEAD
     # line = ser.readline()
     # data = str(line,'utf-8')
     # data=data.strip('\r\n')
     # data = data.split(',')
     data=random_row
+=======
+        # line = ser.readline()
+        # data = str(line,'utf-8')
+        # data=data.strip('\r\n')
+        # data = data.split(',')
+        data=random_row
+>>>>>>> 99533d3ae63b47430a0a7aa2eed7fb70c3cdfb46
     print(data )
     return data
         

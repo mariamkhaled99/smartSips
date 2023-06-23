@@ -50,7 +50,7 @@ urlpatterns = [
  
     path('password/reset/', PasswordResetView.as_view(), name='password_reset'),
     path('password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('publish', views.publish_message, name='publish'),
+    # path('publish', views.publish_message, name='publish'),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # urlpatterns +=router.urls

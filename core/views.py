@@ -1,6 +1,6 @@
 import json
 from django.http import JsonResponse
-from mqtt_test.mqtt import client as mqtt_client
+from core.mqtt import client as mqtt_client
 import requests
 import serial
 import time

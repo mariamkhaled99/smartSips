@@ -30,14 +30,14 @@ def iot_client():
     # data = data.split(',')
     
         
-while True:
-    msg = iot_client()
-    url = 'https://smartsips-production.up.railway.app/publish_message'
-    data = {'topic': 'test_project_iot', 'msg': msg}
-    headers = {'Content-type': 'application/json'}
-    response = requests.post(url, data=json.dumps(data), headers=headers)
-    time.sleep(6)
-    
+
+msg = iot_client()
+url = 'https://smartsips-production.up.railway.app/publish_message'
+data = {'topic': 'test_project_iot', 'msg': msg}
+headers = {'Content-type': 'application/json'}
+response = requests.post(url, data=json.dumps(data), headers=headers)
+time.sleep(6)
+
 def publish_message(request):
     request_data = json.loads(request.body)
     rc, mid = mqtt_client.publish(request_data['topic'], request_data['msg'])

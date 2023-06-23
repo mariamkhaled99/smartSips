@@ -11,7 +11,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from user_api.views import ImageUploadViewSet
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
-import views
+
+from . import views
+
 
 router=DefaultRouter()
 # router.register('user_register',UserViewSet,basename='user_register')

@@ -12,7 +12,7 @@ from django.conf.urls.static import static
 from user_api.views import ImageUploadViewSet
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 
-from . import views
+from .core import views
 
 
 router=DefaultRouter()

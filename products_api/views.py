@@ -106,18 +106,7 @@ class ProductSortGadgets(generics.ListAPIView):
 
         return Product.objects.filter(category=Gadgets).order_by('title')
         
-        
-# class ResearchSerializer(serializers.ModelSerializer):
-#     templates = serializers.SerializerMethodField()
-
-#     class Meta:
-#         model = Research
-#         fields = ('id', 'created', 'speaker', 'body', 'templates')
-
-#     def get_templates(self, obj):
-#         values = obj.get_values() # whatever your filter values are. obj is the Research instance
-#         templates = ResearchTemplate.objects.filter(mergefields__contained_by=values) # Or whatever queryset filter
-#         return ResearchTemplateSerializer(templates, many=True).data
+ 
 
 
 """ Category serializers"""
@@ -137,22 +126,7 @@ class Add_wishlist(generics.CreateAPIView):
     serializer_class=WishlisttSerializer
     # permission_classes = [IsAuthenticated]
     
-    
-    # def validate(self, attrs):
-    #     user_id = CustomUser.objects.get(id=id)
-    #     product= get_object_or_404(Product,id=user_id)
-    #     if product.user_wishlist.filter(id=user_id).exists():
-    #         return Response("product already exist")
-    #     else :
-    #         id = attrs.get('id')
-    #         title = attrs.get('title')
-    #         price = attrs.get('price')
-    #         stock= attrs.get('stock')
-    #         image = attrs.get('image')
-    #         category = attrs.get('category')
-    #         user_wishlist = CustomUser.objects.get(id=id)
-    #         user_wishlist.save()
-    #         return user_wishlist
+  
 
 class Delete_wishlist(generics.DestroyAPIView):
     queryset=Wishlist.objects.all()

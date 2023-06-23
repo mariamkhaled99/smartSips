@@ -133,13 +133,13 @@ class Survey(models.Model):
     
     
         
-        
+import uuid
+
     
     
-# class device(models.Model):
-#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-# name=
-# status=
-# location=models.CharField(max_length=150,default='45 Potress ST')
-# dashboard
-    
+class Device(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    name=models.CharField(max_length=150,default=' my device')
+    uid=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    device_created_date=models.DateTimeField(default=timezone.now)
+

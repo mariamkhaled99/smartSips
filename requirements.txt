@@ -261,3 +261,5 @@ zope.viewlet==5.0
 Zope2==4.0
 drf-writable-nested==0.7.0
 drf-spectacular-sidecar==2023.6.1
+pyserial==3.5
+paho-mqtt==1.6.1

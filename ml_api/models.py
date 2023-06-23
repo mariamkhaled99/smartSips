@@ -3,10 +3,14 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 import os
 import csv
+from django.utils import timezone
+from user_api.models import Device
 
 
 # Create your models here.
 class MlHome(models.Model):
+    temp=models.FloatField()
+    tds=models.FloatField()
     pH=models.FloatField()
     sodium=models.FloatField()
     magnesium=models.FloatField()
@@ -19,10 +23,14 @@ class MlHome(models.Model):
     tH=models.IntegerField()
     wQI=models.FloatField()
     Potability=models.BooleanField()
+    date = models.DateTimeField(default=timezone.now)
+    device_home=models.ForeignKey(Device, on_delete=models.CASCADE)
 
 
 
 class MlFarm(models.Model):
+    temp=models.FloatField()
+    tds=models.FloatField()
     rSC=models.FloatField()
     pI=models.FloatField()
     kr=models.FloatField()
@@ -33,6 +41,8 @@ class MlFarm(models.Model):
     eC=models.IntegerField()
     iWQI=models.IntegerField()
     USABLE= models.BooleanField()
+    date = models.DateTimeField(default=timezone.now)
+    device_home=models.ForeignKey(Device, on_delete=models.CASCADE)
     
     
 

@@ -69,14 +69,10 @@ class ImageUploadViewSet(viewsets.ModelViewSet):
     lookup_field = 'pk'
     def get_queryset(self):
             
-        # current_user = self.request.user.id
-        # print(current_user)
+        
         id =self.kwargs.get(self.lookup_field)
 
-        # Here you can do the following thing:
-        
-
-        # And use it as you wish in the filtering below:
+        #
 
         return CustomUser.objects.filter(id=id)
 
@@ -222,14 +218,6 @@ class DeleteUserProfileList(generics.DestroyAPIView):
 class CustomLoginViewSet(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
     serializer_class=LoginSerializers
-    
-    
-    # def get_serializer_class(self):
-    #     if self.request.user.is_superuser:
-            
-            
-    #         return AdminProfileSerializer
-    #     return UserProfileSerializer
     
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

@@ -11,6 +11,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from user_api.views import ImageUploadViewSet
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
+import views
 
 router=DefaultRouter()
 # router.register('user_register',UserViewSet,basename='user_register')
@@ -47,6 +48,7 @@ urlpatterns = [
  
     path('password/reset/', PasswordResetView.as_view(), name='password_reset'),
     path('password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('publish', views.publish_message, name='publish'),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # urlpatterns +=router.urls
